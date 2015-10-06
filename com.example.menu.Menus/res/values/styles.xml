@@ -2,6 +2,7 @@
 
     <style name="AppTheme" parent="android:Theme.Light" />
 
+    <style name="ActivityTheme" parent="AppTheme" />
     
     <style name="blackSmall" parent="@android:style/TextAppearance.Small">
           <item name="android:textColor">#ff000000</item>

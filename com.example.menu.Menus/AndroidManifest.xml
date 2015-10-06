@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.menu"
+    package="es.uja.git.sv.examples"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="11"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="23" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -16,28 +16,28 @@
     <application
         android:icon="@drawable/ic_boton"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Holo" android:allowBackup="false">
+        android:theme="@style/ActivityTheme" android:allowBackup="false">
         <activity
-            android:name=".Menus"
-            android:label="@string/title_activity_menus" android:theme="@android:style/Theme.Holo">
+            android:name="es.uja.git.sv.examples.Menus"
+            android:label="@string/title_activity_menus" android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-         <activity android:name=".Settings" android:label="@string/title_activity_menus" android:theme="@android:style/Theme.Holo"></activity>
-         <activity android:name=".Graficos" android:label="@string/app_graficos" android:theme="@android:style/Theme.Holo"></activity>
-         <activity android:name=".Help" android:label="@string/app_help" android:theme="@android:style/Theme.Holo"></activity>
-         <activity android:name=".Ficheros" android:label="@string/app_ficheros" android:theme="@android:style/Theme.Holo"></activity>
-         <activity android:name=".Fragmentos" android:label="@string/app_fragments" android:theme="@android:style/Theme.Holo"></activity>
-         <activity android:name=".FragmentosDinamicos" android:label="@string/app_fragments_dinamicos" android:theme="@android:style/Theme.Holo"></activity>
-         <activity android:label="@string/app_networking" android:name=".Network" android:theme="@android:style/Theme.Holo"></activity>
-         <activity android:name="Connectivity" android:label="@string/app_connectivity" android:theme="@android:style/Theme.Holo"></activity>
-         <activity android:name="ProviderUse" android:label="@string/app_provideruse" android:theme="@android:style/Theme.Holo"></activity>
+         <activity android:name="es.uja.git.sv.examples.Settings" android:label="@string/title_activity_menus" android:theme="@style/ActivityTheme"></activity>
+         <activity android:name="es.uja.git.sv.examples.Graficos" android:label="@string/app_graficos" android:theme="@style/ActivityTheme"></activity>
+         <activity android:name="es.uja.git.sv.examples.Help" android:label="@string/app_help" android:theme="@style/ActivityTheme"></activity>
+         <activity android:name="es.uja.git.sv.examples.Ficheros" android:label="@string/app_ficheros" android:theme="@style/ActivityTheme"></activity>
+         <activity android:name="es.uja.git.sv.examples.Fragmentos" android:label="@string/app_fragments" android:theme="@style/ActivityTheme"></activity>
+         <activity android:name="es.uja.git.sv.examples.FragmentosDinamicos" android:label="@string/app_fragments_dinamicos" android:theme="@style/ActivityTheme"></activity>
+         <activity android:label="@string/app_networking" android:name="es.uja.git.sv.examples.Network" android:theme="@style/ActivityTheme"></activity>
+         <activity android:name="Connectivity" android:label="@string/app_connectivity" android:theme="@style/ActivityTheme"></activity>
+         <activity android:name="ProviderUse" android:label="@string/app_provideruse" android:theme="@style/ActivityTheme"></activity>
          <service android:label="@string/service_download" android:name="Download" ></service>
     
      <provider android:name="RecordContentProvider"
-        android:authorities="uja.epsl.aaptm.android.contentproviders" android:exported="true" android:enabled="true"/>
+        android:authorities="es.uja.git.sv.examples.contentproviders" android:exported="true" android:enabled="true"/>
     
     </application>
 
