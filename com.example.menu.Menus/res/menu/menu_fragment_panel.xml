@@ -1,7 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
      <item android:id="@+id/menu_pulsaFragmentPanel"
         android:title="@string/fragmentPanelMenuPulsa"
-        android:orderInCategory="300"
+        android:icon="@drawable/ic_action_hi"
+        android:orderInCategory="200"
         android:showAsAction="ifRoom" />
+     
+      <item android:id="@+id/menu_hidePanel"
+        android:title="@string/menu_ocultar"
+        android:orderInCategory="300"
+        android:icon="@drawable/ic_action_close"
+        android:showAsAction="ifRoom"/>
   
 </menu>

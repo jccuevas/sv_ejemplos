@@ -6,7 +6,13 @@ public class Car {
 	private String brand;
 	private int	hp;
 	private int	id;
-	
+	/**
+	 * 
+	 * @param n Car name
+	 * @param b Brand name
+	 * @param hp horse power
+	 * @param id identifier
+	 */
 	public Car(String n, String b, int hp, int id)
 	{
 		this.name=n;

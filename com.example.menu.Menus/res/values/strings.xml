@@ -30,8 +30,7 @@
 	
 	<string name="help_title">Ayuda de la aplicación de ejemplos</string>
 	<string name="help_text">Esta es una aplicación de la asignatura,
-		Aplicaciones para Telefonía Móvil de la titulación de Ingeniería de
-		Telecomunicación de la Universidad de Jaén
+		Servicios Móviles del Grado de Ingeniería Telemática de la Universidad de Jaén
 	</string>
 	<string name="help_uja">Universidad de Jaén</string>
 	<string name="help_ninepatch">El fondo del TextView del pie de la pantalla es un
@@ -66,9 +65,10 @@
 	<string name="toast_todo">Operación pendiente</string>
 	<string name="menu_showPanel">Mostar</string>
 	<string name="menu_ocultar">Ocultar</string>
+	<string name="menu_swap">Barra</string>
 	<string name="menu_replace">Reemplazar</string>
 	<string name="fragmentPanelInfo">¿Elemento pulsado?</string>
-	<string name="fragmentPanelMenuPulsa">Pulsar</string>
+	<string name="fragmentPanelMenuPulsa">Evento de menú de fragmento: Hi!</string>
 	<string name="layout_fragment_titulo">Fragmento</string>
 	<string name="drawables_ejemploShapeDrawable">El fondo de este layout es un Shape Drawable</string>
 	<string name="drawables_ejemploStateDrawable">StateDrawable</string>
@@ -111,4 +111,5 @@
 	<string name="connectivity_search">Buscar redes</string>
 	<string name="wifipower_hz">Hz</string>
 	<string name="network_url_browse">Ir</string>
+	<string name="row_car_name">Car model</string>
 </resources>

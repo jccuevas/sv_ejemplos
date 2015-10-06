@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import es.uja.git.sv.utils.Car;
 
-public class Panel extends Fragment {
+public class FragmentPanel extends Fragment implements OnShowMessage{
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,11 +34,13 @@ public class Panel extends Fragment {
 				
 		Car c1= new Car("SL500","Mercedes",500,1);
 		Car c2= new Car("Z4","BMW",450,2);
-		Car c3= new Car("R8","Audi",525,2);
+		Car c3= new Car("R8","Audi",525,3);
+		Car c4= new Car("500","FIAT",60,4);
 				
 		cars.add(c1);
 		cars.add(c2);
 		cars.add(c3);
+		cars.add(c4);
 		
 		
 		NewListAdapter nla= new NewListAdapter(this.getActivity(),cars);

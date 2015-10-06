@@ -3,14 +3,11 @@
         android:title="@string/menu_showPanel"
         android:orderInCategory="100"
         android:showAsAction="ifRoom" />
-     <item android:id="@+id/menu_hidePanel"
-        android:title="@string/menu_ocultar"
-        android:orderInCategory="200"
-        android:showAsAction="ifRoom"/>
+    
      
      <item android:id="@+id/menu_replacePanel"
         android:title="@string/menu_replace"
-        android:orderInCategory="300"
+        android:orderInCategory="200"
         android:showAsAction="ifRoom"/>
 
      

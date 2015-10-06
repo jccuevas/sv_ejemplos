@@ -4,15 +4,24 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import es.uja.git.sv.examples.FragmentLista.OnFragmentInteractionListener;
 
-public class Fragmentos extends Activity {
+public class Fragmentos extends Activity implements OnFragmentInteractionListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_fragments);
+
+		FragmentManager fm = getFragmentManager();
+		FragmentTransaction ft = fm.beginTransaction();
+
+		FragmentPanel panel = new FragmentPanel();
+		ft.add(R.id.fragment_viewer, panel);
+		ft.commit();
 
 	}
 
@@ -27,7 +36,7 @@ public class Fragmentos extends Activity {
 			if (!fragment.isVisible()) {
 				ft.show(fragment);
 				ft.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-				ft.addToBackStack(null);
+				// ft.addToBackStack(null);
 				ft.commit();
 			}
 
@@ -39,22 +48,22 @@ public class Fragmentos extends Activity {
 		FragmentManager fm = getFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
 
-		Fragment fragment = fm.findFragmentById(R.id.fragment_container);
+		Fragment fragment = fm.findFragmentById(R.id.fragment_viewer);
 
 		if (fragment == null) {
 
-			FragmentBarra barra = new FragmentBarra();
-			ft.add(R.id.fragment_viewer, barra);
+			FragmentOther otro = new FragmentOther();
+			ft.add(R.id.fragment_viewer, otro);
 			ft.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 			ft.addToBackStack(null);
 			ft.commit();
 
 		} else {
-			FragmentBarra barra = new FragmentBarra();
-			
-			ft.replace(R.id.fragment_viewer, barra);
+			FragmentOther otro = new FragmentOther();
+
 			ft.remove(fragment);
-			// ft.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+			ft.replace(R.id.fragment_viewer, otro);
+			ft.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 			ft.addToBackStack(null);
 			ft.commit();
 
@@ -72,7 +81,7 @@ public class Fragmentos extends Activity {
 
 			ft.hide(fragment);
 			ft.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-			ft.addToBackStack(null);
+			// ft.addToBackStack(null);
 			ft.commit();
 		}
 	}
@@ -97,6 +106,19 @@ public class Fragmentos extends Activity {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void onFragmentInteraction(int position) {
+		Object panel = getFragmentManager().findFragmentById(R.id.fragment_viewer);
+		position=position+1;
+		if (panel != null)
+			if (panel instanceof FragmentPanel){
+				((FragmentPanel) panel).publica("Pulsada opción " + position);
+			} else {
+				((FragmentOther) panel).publica("Pulsada opción " + position);
+			}
+
 	}
 
 }

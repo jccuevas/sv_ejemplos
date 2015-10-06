@@ -80,7 +80,7 @@
     </TableLayout>
 
     <TextView
-        android:id="@+id/row_car_brand"
+        android:id="@+id/panel_textview_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ficheros_internal"

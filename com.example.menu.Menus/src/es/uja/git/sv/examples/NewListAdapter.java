@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import es.uja.git.sv.utils.Car;
 
@@ -42,13 +42,13 @@ public class NewListAdapter extends BaseAdapter {
 		
 		m_parent=parent;
 
-		final TextView name = (TextView) rowView.findViewById(R.id.tag);
+		final TextView name = (TextView) rowView.findViewById(R.id.row_car_name);
 		final TextView brand = (TextView) rowView
 				.findViewById(R.id.row_car_brand);
 		final TextView hp = (TextView) rowView
 				.findViewById(R.id.row_car_hp);
 		
-		final ImageButton delete = (ImageButton) rowView
+		final ImageView delete = (ImageView) rowView
 			.findViewById(R.id.row_car_delete);
 
 		current = values.get(position);
