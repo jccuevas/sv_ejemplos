@@ -17,11 +17,13 @@ public class Fragmentos extends Activity implements OnFragmentInteractionListene
 		setContentView(R.layout.layout_fragments);
 
 		FragmentManager fm = getFragmentManager();
-		FragmentTransaction ft = fm.beginTransaction();
-
-		FragmentPanel panel = new FragmentPanel();
-		ft.add(R.id.fragment_viewer, panel);
-		ft.commit();
+		Fragment fragment = fm.findFragmentById(R.id.fragment_viewer);
+		if (fragment == null) {
+			FragmentTransaction ft = fm.beginTransaction();
+			FragmentPanel panel = new FragmentPanel();
+			ft.add(R.id.fragment_viewer, panel);
+			ft.commit();
+		}
 
 	}
 
@@ -48,7 +50,7 @@ public class Fragmentos extends Activity implements OnFragmentInteractionListene
 		FragmentManager fm = getFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
 
-		Fragment fragment = fm.findFragmentById(R.id.fragment_viewer);
+		Object fragment = fm.findFragmentById(R.id.fragment_viewer);
 
 		if (fragment == null) {
 
@@ -59,10 +61,17 @@ public class Fragmentos extends Activity implements OnFragmentInteractionListene
 			ft.commit();
 
 		} else {
-			FragmentOther otro = new FragmentOther();
 
-			ft.remove(fragment);
-			ft.replace(R.id.fragment_viewer, otro);
+			ft.remove((Fragment) fragment);
+			if (fragment instanceof FragmentPanel) {
+				FragmentOther f = new FragmentOther();
+				ft.replace(R.id.fragment_viewer, f);
+
+			} else {
+				FragmentPanel f = new FragmentPanel();
+				ft.replace(R.id.fragment_viewer, f);
+			}
+
 			ft.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 			ft.addToBackStack(null);
 			ft.commit();
@@ -111,9 +120,9 @@ public class Fragmentos extends Activity implements OnFragmentInteractionListene
 	@Override
 	public void onFragmentInteraction(int position) {
 		Object panel = getFragmentManager().findFragmentById(R.id.fragment_viewer);
-		position=position+1;
+		position = position + 1;
 		if (panel != null)
-			if (panel instanceof FragmentPanel){
+			if (panel instanceof FragmentPanel) {
 				((FragmentPanel) panel).publica("Pulsada opción " + position);
 			} else {
 				((FragmentOther) panel).publica("Pulsada opción " + position);
