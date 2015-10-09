@@ -1,11 +1,14 @@
 package es.uja.git.sv.examples;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -136,15 +139,14 @@ public class Menus extends Activity implements OnKeyListener {
 
 	/**
 	 * Adaptador para el menú de inicio
+	 * 
 	 * @author Juan Carlos
-	 *
+	 * 
 	 */
 	public class MenuListAdapter extends BaseAdapter {
 
 		private final Context context;
 		private String[] values;
-
-	
 
 		public static final int ROW_BACKGORUND_ALPHA = 50;
 		public static final int ROW_SELECTED_ALPHA = 80;
@@ -156,6 +158,7 @@ public class Menus extends Activity implements OnKeyListener {
 
 		}
 
+		@TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
 		@Override
 		public View getView(final int position, View convertView,
 				ViewGroup parent) {
@@ -171,23 +174,45 @@ public class Menus extends Activity implements OnKeyListener {
 
 			text.setText(values[position]);
 
-		
+			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+				final Drawable d1 = context.getResources().getDrawable(
+						R.drawable.botonlista_blanco);
+				rowView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
-			rowView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-				@Override
-				public void onFocusChange(View v, boolean hasFocus) {
-					if (hasFocus) {
-						rowView.setBackgroundDrawable(context.getResources()
-								.getDrawable(R.drawable.botonlista_blanco));
+					@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+					@Override
+					public void onFocusChange(View v, boolean hasFocus) {
+						if (hasFocus) {
+
+							if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+
+								rowView.setBackgroundDrawable(d1);
+							else
+								rowView.setBackground(d1);
+						}
 					}
-					// else
-					// {
-					// rowView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.shape_white));
-					//
-					// }
+				});
+			} else {
+				final Drawable d2 = context.getResources().getDrawable(
+						R.drawable.botonlista_blanco, null);
+				rowView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
-				}
-			});
+					@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+					@Override
+					public void onFocusChange(View v, boolean hasFocus) {
+						if (hasFocus) {
+
+							if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+
+								rowView.setBackgroundDrawable(d2);
+							else
+								rowView.setBackground(d2);
+
+						}
+					}
+				});
+
+			}
 
 			rowView.setOnClickListener(new OnClickListener() {
 				@Override
@@ -204,12 +229,17 @@ public class Menus extends Activity implements OnKeyListener {
 						startActivity(newactivity_fragments);
 						break;
 					case 2:
+						Intent newactivity_fragmentsdinamic = new Intent(
+								getApplicationContext(), FragmentosDinamicos.class);
+						startActivity(newactivity_fragmentsdinamic);
+						break;
+					case 3:
 						Intent newactivity = new Intent(
 								getApplicationContext(), Graficos.class);
 						startActivity(newactivity);
 						break;
-					case 3:
-			
+					case 4:
+
 						Fragment f4 = mManager
 								.findFragmentByTag(FRAGMENT_DETAILS);
 						FragmentTransaction ft4 = mManager.beginTransaction();
@@ -222,7 +252,7 @@ public class Menus extends Activity implements OnKeyListener {
 						// getApplicationContext(), Network.class);
 						// startActivity(newactivity_networking);
 						break;
-					case 4:
+					case 5:
 
 						Fragment f5 = mManager
 								.findFragmentByTag(FRAGMENT_DETAILS);
@@ -233,7 +263,7 @@ public class Menus extends Activity implements OnKeyListener {
 								FRAGMENT_DETAILS);
 						ft5.commit();
 						break;
-					case 5:
+					case 6:
 						Intent newactivity_contentprovider = new Intent(
 								getApplicationContext(), ProviderUse.class);
 						startActivity(newactivity_contentprovider);
