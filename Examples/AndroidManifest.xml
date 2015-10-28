@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
 
     <application
         android:icon="@drawable/ic_boton"
@@ -33,7 +35,8 @@
          <activity android:name="es.uja.git.sv.examples.FragmentosDinamicos" android:label="@string/app_fragments_dinamicos" android:theme="@style/ActivityTheme"></activity>
          <activity android:name="es.uja.git.sv.examples.Prueba" android:label="@string/app_fragments_dinamicos" android:theme="@style/ActivityTheme"></activity>
          <activity android:label="@string/app_networking" android:name="es.uja.git.sv.examples.Network" android:theme="@style/ActivityTheme"></activity>
-         <activity android:name="Connectivity" android:label="@string/app_connectivity" android:theme="@style/ActivityTheme"></activity>
+         <activity android:name="ConnectivityWiFi" android:label="@string/app_connectivity" android:theme="@style/ActivityTheme"></activity>
+         <activity android:name="ConnectivityBT" android:label="@string/app_connectivity_bt" android:theme="@style/ActivityTheme"></activity>
          <activity android:name="ProviderUse" android:label="@string/app_provideruse" android:theme="@style/ActivityTheme"></activity>
          <service android:label="@string/service_download" android:name="Download" ></service>
     

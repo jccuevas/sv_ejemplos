@@ -28,29 +28,81 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/fragmentinfo_title"
+            android:id="@+id/fragmentConectividad_Wifi_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="@string/app_connectivity"
+            android:text="@string/connectivity_wifi"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
+        <ImageView
+            android:id="@+id/fragmentConectividad_Wifi_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:contentDescription="@string/contentDescription_wifilogo"
+            android:src="@drawable/wifi" />
     </FrameLayout>
 
     <Button
         android:id="@+id/framentmenu_launchbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignRight="@+id/fragmentinfo_scrollview"
+        android:layout_alignEnd="@+id/fragmentinfo_scrollview"
+        android:layout_below="@+id/fragmentinfo_scrollview"
         android:text="@string/menu_startexample" />
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:id="@+id/fragmentConectividad_BT"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fragmentinfo_scrollview"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/wifi" />
+        android:layout_alignRight="@+id/framentmenu_launchbutton"
+        android:layout_alignEnd="@+id/framentmenu_launchbutton"
+        android:layout_below="@+id/framentmenu_launchbutton"
+        android:layout_marginTop="10dp"
+        android:background="#33b5e5"
+        android:padding="5dp" >
 
+        <TextView
+            android:id="@+id/fragmentConectividad_BT_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/connectivity_bluetooth"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ImageView
+            android:id="@+id/fragmentConectividad_BT_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:contentDescription="@string/contentDescription_BTlogo"
+            android:src="@drawable/ic_device_bluetooth" />
+    </FrameLayout>
+
+      <ScrollView
+        android:id="@+id/fragmentinfo_scrollviewBT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fragmentConectividad_BT"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/fragmentinfo_helptextBT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_connectivity_descriptionBT"
+            android:textAppearance="@style/blueSmall" />
+    </ScrollView>
+
+      <Button
+          android:id="@+id/framentmenu_launchbuttonBT"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignRight="@+id/fragmentinfo_scrollviewBT"
+          android:layout_alignEnd="@+id/fragmentinfo_scrollviewBT"
+          android:layout_below="@+id/fragmentinfo_scrollviewBT"
+          android:text="@string/menu_startexample" />
+    
 </RelativeLayout>

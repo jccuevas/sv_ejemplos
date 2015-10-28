@@ -17,9 +17,9 @@ import es.uja.git.sv.examples.R;
 
 public class WiFiScanReceiver extends BroadcastReceiver {
   private static final String TAG = "WiFiScanReceiver";
-  Connectivity wifiDemo;
+  ConnectivityWiFi wifiDemo;
 
-  public WiFiScanReceiver(Connectivity wifiDemo) {
+  public WiFiScanReceiver(ConnectivityWiFi wifiDemo) {
     super();
     this.wifiDemo = wifiDemo;
   }

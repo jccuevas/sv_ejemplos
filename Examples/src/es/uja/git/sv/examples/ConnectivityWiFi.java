@@ -22,7 +22,7 @@ import android.widget.Toast;
 import es.uja.git.sv.examples.R;
 
 
-public class Connectivity extends Activity {
+public class ConnectivityWiFi extends Activity {
 
 	private static final String TAG = "Connectivity";
 	WifiManager wifi;

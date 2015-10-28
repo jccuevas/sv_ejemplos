@@ -8,7 +8,8 @@
     <string name="app_fragments">Manejo de fragmentos</string>
     <string name="app_fragments_dinamicos">Manejo de fragmentos dinámicos</string>
     <string name="app_networking">Networking</string>
-    <string name="app_connectivity">Conectividad</string>
+    <string name="app_connectivity">Conectividad WiFi</string>
+    <string name="app_connectivity_bt">Conectividad Bluetooth</string>
     <string name="app_provideruse">Uso de un Proveedor de Contenido</string>
     <string name="title_activity_menus">Menus</string>
     <string name="settings">Configuración</string>
@@ -94,6 +95,7 @@
     <string name="fragment_navigation_progress">Barra de progreso</string>
     <string name="menu_startexample">Iniciar ejemplo</string>
     <string name="menu_connectivity_description">En este ejemplo se mostrará una lista con las redes wifi que están registradas en el dispositivo, así como posibilitar un escaneo de las redes wifi dentro del alcance.</string>
+    <string name="menu_connectivity_descriptionBT">En este ejemplo se los dispositivos BT dentro del alcance.</string>
     <string name="menu_connectivity_networking">En este ejemplo se muestran diferentes formas de conexión a un recurso remoto, como a través de la clase HttpUrlConnection, sockets. Se muestra también la forma de crear tareas asíncronas y un ejemplo de Servicio</string>
     <string name="connectivity_netlist">Redes almacenadas</string>
     <string name="wifipower_ssid">SSID</string>
@@ -106,5 +108,12 @@
     <string name="prueba_panelfijo">Panel fijo</string>
     <string name="toast_menus_filename">Añadido un registro al fichero</string>
     <string name="toast_menus_errorfile">Error al grabar datos</string>
+    <string name="contentDescription_wifilogo">Wifi logo</string>
+    <string name="contentDescription_BTlogo">Bluetooth logo</string>
+    <string name="connectivity_wifi">Redes WiFi</string>
+    <string name="connectivity_bluetooth">Bluetooth</string>
+    <string name="bluetooth_scanningdevices">Buscando dispositivos Bluetooth</string>
+    <string name="connectivity_bt_notsupported">El dispositivo no soporta Bluetooth</string>
+    <string name="bluetooth_devicelist">Dispositivos detectados</string>
 
 </resources>

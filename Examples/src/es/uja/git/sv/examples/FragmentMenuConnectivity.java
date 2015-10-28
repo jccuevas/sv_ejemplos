@@ -20,14 +20,27 @@ public class FragmentMenuConnectivity extends Fragment {
 		View fragment = inflater.inflate(
 				R.layout.layout_fragment_menu_connectivity, null);
 
-		Button newExample = (Button) fragment
+		Button newExampleWifi = (Button) fragment
 				.findViewById(R.id.framentmenu_launchbutton);
-		newExample.setOnClickListener(new OnClickListener() {
+		newExampleWifi.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				Intent newactivity_connectivity = new Intent(getActivity(),
-						Connectivity.class);
+						ConnectivityWiFi.class);
+				startActivity(newactivity_connectivity);
+
+			}
+		});
+		
+		Button newExampleBT = (Button) fragment
+				.findViewById(R.id.framentmenu_launchbuttonBT);
+		newExampleBT.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				Intent newactivity_connectivity = new Intent(getActivity(),
+						ConnectivityBT.class);
 				startActivity(newactivity_connectivity);
 
 			}

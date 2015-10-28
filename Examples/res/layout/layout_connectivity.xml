@@ -7,7 +7,7 @@
     android:overScrollMode="ifContentScrolls" >
 
     <TextView
-        android:id="@+id/connectivity_textView_foot"
+        android:id="@+id/bluetooth_textView_foot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -49,7 +49,7 @@
             </FrameLayout>
 
             <ScrollView
-                android:id="@+id/scrollView1"
+                android:id="@+id/scrollViewBluetooth"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="@dimen/activity_horizontal_margin" >
