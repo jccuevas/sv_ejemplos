@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import es.uja.git.sv.examples.R;
 import es.uja.git.sv.utils.Car;
 
 

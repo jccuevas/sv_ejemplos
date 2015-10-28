@@ -56,16 +56,17 @@ public class Mensaje {
 		try {
 			this.secuenciaRecibida = dis.readInt();
 			this.fecha = dis.readLong();
+		String datso= dis.readUTF();
 
 		} catch (IOException ex) {
 		}
-
+finally{
 		String[] campos = datos.split(" ");
 		if (campos.length == 4) {
 			secuenciaRecibida = Integer.parseInt(campos[0]);
 			fecha = Long.parseLong(campos[1]);
 			data = new Coordenadas(campos[2], campos[3]);
-		}
+		}}
 	}
 
 	public String getMensaje() {

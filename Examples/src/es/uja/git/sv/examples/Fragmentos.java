@@ -8,9 +8,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import es.uja.git.sv.examples.R;
 import es.uja.git.sv.examples.FragmentLista.OnFragmentInteractionListener;
 
-public class Fragmentos extends Activity implements OnFragmentInteractionListener {
+public class Fragmentos extends Activity implements OnFragmentInteractionListener, Registros {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -128,6 +129,12 @@ public class Fragmentos extends Activity implements OnFragmentInteractionListene
 				((FragmentOther) panel).publica("Pulsada opción " + position);
 			}
 
+	}
+
+	@Override
+	public boolean nuevoRegistro(String key, String value) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import es.uja.git.sv.examples.R;
 
 public class FragmentOther extends Fragment implements OnShowMessage{
 	@Override

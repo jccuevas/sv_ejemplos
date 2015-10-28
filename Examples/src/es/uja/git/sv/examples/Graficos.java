@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import es.uja.git.sv.examples.R;
 import es.uja.git.sv.graphics.Lienzo;
 
 public class Graficos extends Activity {

@@ -30,6 +30,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import es.uja.git.sv.examples.R;
 
 public class Network extends Activity {
 	private static final String DEBUG_TAG = null;

@@ -2,6 +2,8 @@ package es.uja.git.sv.examples;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,9 +15,13 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import es.uja.git.sv.examples.R;
+import es.uja.git.sv.examples.FragmentLista.OnFragmentInteractionListener;
 import es.uja.git.sv.utils.Car;
 
 public class FragmentPanel extends Fragment implements OnShowMessage{
+
+	private Registros mListener;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,7 +56,7 @@ public class FragmentPanel extends Fragment implements OnShowMessage{
 		return fragment;
 		
 	}
-	
+
 	public void publica(CharSequence text)
 	{
 
@@ -75,10 +81,26 @@ public class FragmentPanel extends Fragment implements OnShowMessage{
 		{
 		case R.id.menu_pulsaFragmentPanel:
 			Toast.makeText(getActivity(), getResources().getString(R.string.fragmentPanelMenuPulsa),Toast.LENGTH_SHORT).show();
+			mListener.nuevoRegistro("apellido", "lopez");
 			return true;
 		
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	/* (non-Javadoc)
+	 * @see android.app.Fragment#onAttach(android.app.Activity)
+	 */
+	@Override
+	public void onAttach(Activity activity) {
+		try {
+			if(Activity.class.isInstance(Fragmentos.class))
+			{}
+			mListener = (Registros) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString() + " must implement Registros");
+		}
+		super.onAttach(activity);
 	}
 	
 	

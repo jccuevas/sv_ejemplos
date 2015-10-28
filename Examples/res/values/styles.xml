@@ -8,6 +8,11 @@
           <item name="android:textColor">#ff000000</item>
 
     </style>
+     <style name="blackLarge" parent="@android:style/TextAppearance.Medium">
+          <item name="android:textColor">#ff000000</item>
+          <item name="android:textStyle">italic</item>
+
+    </style>
     <style name="blueSmall" parent="@android:style/TextAppearance.Small">
           <item name="android:textColor">#ff33b5e5</item>
 

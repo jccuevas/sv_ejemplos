@@ -1,5 +1,6 @@
 package es.uja.git.sv.examples;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -38,14 +39,14 @@ public class Coordenadas {
 		
 	}
 	
-	public void toByteArray (DataOutputStream dos){
-		try {
+	public byte[] toByteArray () throws IOException{
+		
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(16);
+		DataOutputStream dos = new DataOutputStream(bos);
+	
 			dos.writeDouble(this.latitud);
 			dos.writeDouble(this.longitud);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			return bos.toByteArray();
 		
 	
 	}
@@ -53,6 +54,11 @@ public class Coordenadas {
 	public String toString()
 	{
 		return  latitud+" "+longitud;
+		
+	}
+
+	public void toByteArray(DataOutputStream dos) {
+		// TODO Auto-generated method stub
 		
 	}
 }

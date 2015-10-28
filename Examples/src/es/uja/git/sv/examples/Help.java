@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import es.uja.git.sv.examples.R;
 
 
 public class Help extends Activity {

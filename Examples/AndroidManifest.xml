@@ -31,6 +31,7 @@
          <activity android:name="es.uja.git.sv.examples.Ficheros" android:label="@string/app_ficheros" android:theme="@style/ActivityTheme"></activity>
          <activity android:name="es.uja.git.sv.examples.Fragmentos" android:label="@string/app_fragments" android:theme="@style/ActivityTheme"></activity>
          <activity android:name="es.uja.git.sv.examples.FragmentosDinamicos" android:label="@string/app_fragments_dinamicos" android:theme="@style/ActivityTheme"></activity>
+         <activity android:name="es.uja.git.sv.examples.Prueba" android:label="@string/app_fragments_dinamicos" android:theme="@style/ActivityTheme"></activity>
          <activity android:label="@string/app_networking" android:name="es.uja.git.sv.examples.Network" android:theme="@style/ActivityTheme"></activity>
          <activity android:name="Connectivity" android:label="@string/app_connectivity" android:theme="@style/ActivityTheme"></activity>
          <activity android:name="ProviderUse" android:label="@string/app_provideruse" android:theme="@style/ActivityTheme"></activity>

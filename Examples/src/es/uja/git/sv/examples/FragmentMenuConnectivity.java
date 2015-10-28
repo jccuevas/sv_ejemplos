@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import es.uja.git.sv.examples.R;
 
 public class FragmentMenuConnectivity extends Fragment {
 

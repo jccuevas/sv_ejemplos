@@ -5,34 +5,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:overScrollMode="ifContentScrolls" >
-
     <TextView
         android:id="@+id/connectivity_textView_foot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:background="@drawable/uja"
         android:text="@string/help_uja"
         android:textAppearance="@style/blueSmall" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/connectivity_textView_foot"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:baselineAligned="false"
-        android:orientation="vertical" >
+        android:orientation="horizontal" >
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical" >
 
-            <FrameLayout
+             <FrameLayout
                 android:id="@+id/FrameLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -66,8 +64,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical" >
 
@@ -75,17 +73,18 @@
                 android:id="@+id/FrameLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_white"
-                android:padding="@dimen/activity_horizontal_margin" >
+                android:background="@drawable/shape_white" 
+                android:padding="@dimen/activity_horizontal_margin">
 
                 <TextView
                     android:id="@+id/textView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    
                     android:text="@string/connectivity_search"
-                    android:textAppearance="@style/blackLarge" />
+                    android:textAppearance="@style/blackLarge" 
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"/>
             </FrameLayout>
 
             <ScrollView

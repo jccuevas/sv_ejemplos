@@ -19,6 +19,8 @@
     <string name="menu_settings">Configuración</string>
     <string name="menu_exit">Salir</string>
     <string name="menu_change">Cambiar</string>
+    <string name="menu_searchWifi">Burcar redes</string>
+    <string name="menu_searchBT">Burcar dispositivos BlueTooth</string>
     <string name="menu_graficos_drawresource">Dibujar desde recurso</string>
     <string name="menu_help">Ayuda</string>
     <string name="menu_generico">Elemento de menú</string>
@@ -45,8 +47,8 @@
     <string name="ficheros_external">Externo</string>
     <string name="ficheros_internal">Interno</string>
     <string name="ficheros_load">Leer</string>
-    <string name="toast_saved">Escribir</string>
-    <string name="toast_loaded">Cargado</string>
+    <string name="toast_saved">Datos guardados</string>
+    <string name="toast_loaded">Datos cargados</string>
     <string name="toast_error">Error</string>
     <string name="toast_error_nomedia">Error: no hay almacenamiento externo</string>
     <string name="toast_todo">Operación pendiente</string>
@@ -77,7 +79,7 @@
     <string name="fragment_url_inicio">http://150.214.170.105:80</string>
     <string name="connectivity_scan">Buscar</string>
     <string name="connectivity_result">resultado&#8230;</string>
-    <string name="connectivity_code_startscan">Buscando wifi&#8230;</string>
+    <string name="connectivity_code_startscan">Buscando redes wifi cercanas&#8230;</string>
     <string name="ficheros_database">Base de datos</string>
     <string name="ficheros_almacenamiento">Almacenamiento</string>
     <string name="service_download">Download service</string>
@@ -93,12 +95,14 @@
     <string name="menu_startexample">Iniciar ejemplo</string>
     <string name="menu_connectivity_description">En este ejemplo se mostrará una lista con las redes wifi que están registradas en el dispositivo, así como posibilitar un escaneo de las redes wifi dentro del alcance.</string>
     <string name="menu_connectivity_networking">En este ejemplo se muestran diferentes formas de conexión a un recurso remoto, como a través de la clase HttpUrlConnection, sockets. Se muestra también la forma de crear tareas asíncronas y un ejemplo de Servicio</string>
-    <string name="connectivity_netlist">Lista de redes almacenada en el dispositivo</string>
+    <string name="connectivity_netlist">Redes almacenadas</string>
     <string name="wifipower_ssid">SSID</string>
     <string name="wifipower_dbm">dBm</string>
-    <string name="connectivity_search">Buscar redes</string>
+    <string name="connectivity_search">Redes Wifi detectadas</string>
     <string name="wifipower_hz">Hz</string>
     <string name="network_url_browse">Ir</string>
     <string name="row_car_name">Car model</string>
+    <string name="newActivity">Lanzar</string>
+    <string name="prueba_panelfijo">Panel fijo</string>
 
 </resources>

@@ -34,7 +34,8 @@ public class Menus extends Activity implements OnKeyListener {
 	private int posTouched = -1;
 	// ArrayAdapter<String> adapter=null;
 	MenuListAdapter adapter = null;
-
+	public final int ACTIVITY_FICHEROS=1;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -215,13 +216,15 @@ public class Menus extends Activity implements OnKeyListener {
 			}
 
 			rowView.setOnClickListener(new OnClickListener() {
+				
+
 				@Override
 				public void onClick(View v) {
 					switch (position) {
 					case 0:
 						Intent newactivity_ficheros = new Intent(
 								getApplicationContext(), Ficheros.class);
-						startActivity(newactivity_ficheros);
+						startActivityForResult(newactivity_ficheros,ACTIVITY_FICHEROS);
 						break;
 					case 1:
 						Intent newactivity_fragments = new Intent(
@@ -231,6 +234,7 @@ public class Menus extends Activity implements OnKeyListener {
 					case 2:
 						Intent newactivity_fragmentsdinamic = new Intent(
 								getApplicationContext(), FragmentosDinamicos.class);
+						
 						startActivity(newactivity_fragmentsdinamic);
 						break;
 					case 3:
@@ -267,6 +271,11 @@ public class Menus extends Activity implements OnKeyListener {
 						Intent newactivity_contentprovider = new Intent(
 								getApplicationContext(), ProviderUse.class);
 						startActivity(newactivity_contentprovider);
+						break;
+					case 7:
+						Intent newactivity_prueba = new Intent(
+								getApplicationContext(), Prueba.class);
+						startActivity(newactivity_prueba);
 						break;
 					default:
 						finish();
@@ -307,6 +316,27 @@ public class Menus extends Activity implements OnKeyListener {
 			return -1;
 		}
 
+	}
+
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		switch(requestCode)
+		{
+		case ACTIVITY_FICHEROS:
+			if(resultCode==RESULT_OK)
+			{
+			String name= data.getExtras().getString("name");
+			Toast.makeText(this, "File name"+name, Toast.LENGTH_LONG).show();
+			}
+			else
+				Toast.makeText(this, "File ERROR", Toast.LENGTH_LONG).show();
+			break;
+		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 }

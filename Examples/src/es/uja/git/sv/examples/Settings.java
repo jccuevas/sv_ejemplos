@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
+import es.uja.git.sv.examples.R;
 
 public class Settings extends Activity {
 

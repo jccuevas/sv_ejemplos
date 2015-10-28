@@ -11,6 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -44,11 +45,8 @@ public class Ficheros extends Activity {
 		String value_s = edit_n.getEditableText().toString();
 		String filename = edit_f.getEditableText().toString();
 
-		
-
 		if (value_s != null)
 			try {
-
 				value = Integer.valueOf(value_s);
 			} catch (NumberFormatException es) {
 				value = 0;
@@ -56,38 +54,54 @@ public class Ficheros extends Activity {
 		else
 			value = 0;
 
+		 Intent i = getIntent();
+         // Le metemos el resultado que queremos mandar a la
+         // actividad principal.
+         i.putExtra("name", filename);
+         
 		try {
-
-			FileOutputStream os = openFileOutput(filename, MODE_PRIVATE);
-					//| MODE_APPEND);
-
+			FileOutputStream os = openFileOutput(filename, MODE_PRIVATE | MODE_APPEND);
 			/* Escritura sin serialización*/
-			//DataOutputStream dos = new DataOutputStream(os);
-			//dos.writeUTF(texto);
-			//dos.writeInt(n);
-			//dos.flush();
-			//dos.close();
+			DataOutputStream dos = new DataOutputStream(os);
+			dos.writeUTF(tag);
+			dos.writeInt(value);
+			dos.flush();
+			dos.close();
 
 			/*Escritura con serialización*/
-			Record data = new Record(tag,value);
-			ObjectOutputStream oos = new ObjectOutputStream(os);
-			oos.writeObject(data);
-			oos.flush();
-			oos.close();
+//			Record data = new Record(tag,value);
+//			ObjectOutputStream oos = new ObjectOutputStream(os);
+//			oos.writeObject(data);
+//			oos.flush();
+//			oos.close();
 			/*Fin escritura co serialización*/
-			
 			os.close();
 			Toast.makeText(this,
 					getResources().getString(R.string.toast_saved),
 					Toast.LENGTH_SHORT).show();
+		    setResult(RESULT_OK, i);
+
+	         // Finalizamos la Activity para volver a la anterior
+	         finish();
 
 		} catch (IOException ex) {
 			Toast.makeText(this,
 					getResources().getString(R.string.toast_error),
 					Toast.LENGTH_SHORT).show();
+		    setResult(RESULT_CANCELED, i);
+
+	         // Finalizamos la Activity para volver a la anterior
+	         finish();
 
 		}
-
+		
+		
+	
+         // Establecemos el resultado, y volvemos a la actividad
+         // principal. La variable que introducimos en primer lugar
+         // "RESULT_OK" es de la propia actividad, no tenemos que
+         // declararla nosotros.
+     
 	}
 
 	public void onSaveExternal(View v) {
@@ -168,39 +182,40 @@ public class Ficheros extends Activity {
 			FileInputStream is = openFileInput(filename);
 			
 			/* Lectura sin serialización */
-//			DataInputStream dos = new DataInputStream(is);
-//			int n = dos.available();
-//			texto = "Leidos (" + n + " bytes)\r\n";
-//			while (dos.available() > 0) {
-//				texto = texto + " clave: " + dos.readUTF() + " valor:"
-//						+ dos.readInt() + "\r\n";
-//			}
-//			dos.close();
+			DataInputStream dos = new DataInputStream(is);
+			
+			int n = dos.available();
+			texto = "Leidos (" + n + " bytes)\r\n";
+			while (dos.available() > 0) {
+				texto = texto + " clave: " + dos.readUTF() + " valor:"
+						+ dos.readInt() + "\r\n";
+			}
+			dos.close();
 
 	
 			/*Lectura con serialización */
-			ObjectInputStream ois = new ObjectInputStream(is);
-			Record data = null;
-			
-			
-				try {
-					boolean end=false;
-					while(!end)
-					{
-						try{
-					
-						data = (Record)ois.readObject();
-						texto=texto+data.toString()+"\r\n";
-						}catch(EOFException ex)
-						{
-							end=true;
-						}
-					}
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			
+//			ObjectInputStream ois = new ObjectInputStream(is);
+//			Record data = null;
+//			
+//			
+//				try {
+//					boolean end=false;
+//					while(!end)
+//					{
+//						try{
+//					
+//						data = (Record)ois.readObject();
+//						texto=texto+data.toString()+"\r\n";
+//						}catch(EOFException ex)
+//						{
+//							end=true;
+//						}
+//					}
+//				} catch (ClassNotFoundException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			
 
 					
 			is.close();
@@ -271,9 +286,7 @@ public class Ficheros extends Activity {
 	public void onSaveDatabase(View view) {
 
 		if(database!=null)
-		{
-		
-			
+		{	
 			database.addRecord(getData());
 		}
 	}
