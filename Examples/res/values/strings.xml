@@ -104,5 +104,7 @@
     <string name="row_car_name">Car model</string>
     <string name="newActivity">Lanzar</string>
     <string name="prueba_panelfijo">Panel fijo</string>
+    <string name="toast_menus_filename">Añadido un registro al fichero</string>
+    <string name="toast_menus_errorfile">Error al grabar datos</string>
 
 </resources>

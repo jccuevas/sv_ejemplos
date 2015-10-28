@@ -330,10 +330,10 @@ public class Menus extends Activity implements OnKeyListener {
 			if(resultCode==RESULT_OK)
 			{
 			String name= data.getExtras().getString("name");
-			Toast.makeText(this, "File name"+name, Toast.LENGTH_LONG).show();
+			Toast.makeText(this, this.getString(R.string.toast_menus_filename)+" "+name, Toast.LENGTH_LONG).show();
 			}
 			else
-				Toast.makeText(this, "File ERROR", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "ERROR al grabar datos", Toast.LENGTH_LONG).show();
 			break;
 		}
 		super.onActivityResult(requestCode, resultCode, data);
