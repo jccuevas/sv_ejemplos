@@ -2,6 +2,7 @@ package es.uja.git.sv.examples;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -36,7 +37,8 @@ public final class ConnectivityBT extends Activity {
 
 		// Setup UI
 		mList = (ListView) findViewById(R.id.bluetooth_listview_result);
-		mArrayAdapter = new ArrayAdapter<String>(this, 0);
+		mArrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
+		
 		mList.setAdapter(mArrayAdapter);
 		// Setup Bluetooth
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -63,19 +65,16 @@ public final class ConnectivityBT extends Activity {
 					// Get the BluetoothDevice object from the Intent
 					BluetoothDevice device = intent
 							.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+					BluetoothClass btclass = intent
+							.getParcelableExtra(BluetoothDevice.EXTRA_CLASS);
+					int  rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
+		          	
 					// Add the name and address to an array adapter to
 					// show in a ListView
+					
 					mArrayAdapter.add(device.getName() + "\n"
-							+ device.getAddress());
-//					Toast.makeText(
-//							getApplicationContext(),
-//							device.getName() + "\n"
-//									+ device.getAddress(),
-//							Toast.LENGTH_LONG).show();
-					
+							+ device.getAddress()+"  RSSI: " + rssi + "dBm");
 					mList.setAdapter(mArrayAdapter);
-				//	mList.invalidate();
-					
 					
 				}
 			}
@@ -119,6 +118,8 @@ public final class ConnectivityBT extends Activity {
 					Toast.LENGTH_LONG).show();
 
 			if (this.mIsBTEnabled && mReceiver != null) {
+				mArrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
+				
 				mBluetoothAdapter.startDiscovery();
 				Log.d(TAG, "onClick() bluetooth look for devices");
 			}
