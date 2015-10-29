@@ -50,6 +50,36 @@ public final class ConnectivityBT extends Activity {
 		}
 
 		checkBT();
+		
+		// Si el BT se activa se crea un BroadcastReceiver para
+		// ACTION_FOUND
+		mReceiver = new BroadcastReceiver() {
+			public void onReceive(Context context, Intent intent) {
+				String action = intent.getAction();
+				// When discovery finds a device
+				if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+					// Get the BluetoothDevice object from the Intent
+					BluetoothDevice device = intent
+							.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+					// Add the name and address to an array adapter to
+					// show in a ListView
+					mArrayAdapter.add(device.getName() + "\n"
+							+ device.getAddress());
+					Toast.makeText(
+							getApplicationContext(),
+							device.getName() + "\n"
+									+ device.getAddress(),
+							Toast.LENGTH_LONG).show();
+				}
+			}
+
+		};
+		// Register the BroadcastReceiver
+		IntentFilter filter = new IntentFilter(
+				BluetoothDevice.ACTION_FOUND);
+		registerReceiver(mReceiver, filter); // Don't forget to
+												// unregister during
+												// onDestroy
 
 	}
 
@@ -60,6 +90,8 @@ public final class ConnectivityBT extends Activity {
 					BluetoothAdapter.ACTION_REQUEST_ENABLE);
 			startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
 		}
+		else
+			this.mIsBTEnabled = true;
 	}
 
 	@Override
@@ -96,35 +128,7 @@ public final class ConnectivityBT extends Activity {
 			if (resultCode == RESULT_OK) {
 				this.mIsBTEnabled = true;
 
-				// Si el BT se activa se crea un BroadcastReceiver para
-				// ACTION_FOUND
-				mReceiver = new BroadcastReceiver() {
-					public void onReceive(Context context, Intent intent) {
-						String action = intent.getAction();
-						// When discovery finds a device
-						if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-							// Get the BluetoothDevice object from the Intent
-							BluetoothDevice device = intent
-									.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-							// Add the name and address to an array adapter to
-							// show in a ListView
-							mArrayAdapter.add(device.getName() + "\n"
-									+ device.getAddress());
-							Toast.makeText(
-									getApplicationContext(),
-									device.getName() + "\n"
-											+ device.getAddress(),
-									Toast.LENGTH_LONG).show();
-						}
-					}
-
-				};
-				// Register the BroadcastReceiver
-				IntentFilter filter = new IntentFilter(
-						BluetoothDevice.ACTION_FOUND);
-				registerReceiver(mReceiver, filter); // Don't forget to
-														// unregister during
-														// onDestroy
+			
 			} else
 				this.mIsBTEnabled = false;
 			break;
