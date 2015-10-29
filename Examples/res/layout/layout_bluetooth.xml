@@ -45,22 +45,15 @@
                 android:textAppearance="@style/blackLarge" />
         </FrameLayout>
 
-        <ScrollView
-            android:id="@+id/scrollViewBluetooth"
+ 
+
+        <ListView
+            android:id="@+id/bluetooth_listview_result"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/activity_horizontal_margin" >
-
-            <TextView
-                android:id="@+id/bluetooth_textView_result"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:overScrollMode="always"
-                android:scrollbars="vertical"
-                android:text="@string/connectivity_result"
-                android:textAppearance="@style/blueSmall" />
-        </ScrollView>
-
+            android:layout_height="wrap_content"
+            android:dividerHeight="1dp"
+            android:drawSelectorOnTop="false" >
+        </ListView>
     </LinearLayout>
 
 </RelativeLayout>

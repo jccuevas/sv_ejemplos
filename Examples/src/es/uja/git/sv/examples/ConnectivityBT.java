@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +23,7 @@ public final class ConnectivityBT extends Activity {
 	private static final String TAG = "Bluetooth";
 	private static final int REQUEST_ENABLE_BT = 0;
 
-	private TextView mTextStatus;
+	private ListView mList;
 	private BluetoothAdapter mBluetoothAdapter;
 	private boolean mIsBTEnabled = false;
 	private BroadcastReceiver mReceiver = null;
@@ -34,8 +35,9 @@ public final class ConnectivityBT extends Activity {
 		setContentView(R.layout.layout_bluetooth);
 
 		// Setup UI
-		mTextStatus = (TextView) findViewById(R.id.bluetooth_textView_result);
+		mList = (ListView) findViewById(R.id.bluetooth_listview_result);
 		mArrayAdapter = new ArrayAdapter<String>(this, 0);
+		mList.setAdapter(mArrayAdapter);
 		// Setup Bluetooth
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		if (mBluetoothAdapter == null) {
@@ -65,11 +67,16 @@ public final class ConnectivityBT extends Activity {
 					// show in a ListView
 					mArrayAdapter.add(device.getName() + "\n"
 							+ device.getAddress());
-					Toast.makeText(
-							getApplicationContext(),
-							device.getName() + "\n"
-									+ device.getAddress(),
-							Toast.LENGTH_LONG).show();
+//					Toast.makeText(
+//							getApplicationContext(),
+//							device.getName() + "\n"
+//									+ device.getAddress(),
+//							Toast.LENGTH_LONG).show();
+					
+					mList.setAdapter(mArrayAdapter);
+				//	mList.invalidate();
+					
+					
 				}
 			}
 
