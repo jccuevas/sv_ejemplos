@@ -3,8 +3,15 @@
     <item
         android:id="@+id/menu_searchBT"
         android:icon="@drawable/ic_action_bluetooth_searching"
-        android:orderInCategory="20"
+        android:orderInCategory="10"
         android:showAsAction="ifRoom"
         android:title="@string/menu_searchBT"/>
+    
+     <item
+        android:id="@+id/menu_startBTserver"
+        android:icon="@drawable/ic_action_play"
+        android:orderInCategory="20"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_startBT"/>
 
 </menu>
