@@ -55,7 +55,7 @@ public final class ConnectivityBT extends Activity {
 
 				Bundle data = msg.getData();
 				// ALERT MESSAGE
-				Toast.makeText(getBaseContext(), "Server Response: " + data.getByteArray(MESSAGE_KEY_DATAREAD),
+				Toast.makeText(getBaseContext(), "Server Response: " + new String(data.getByteArray(MESSAGE_KEY_DATAREAD)),
 						Toast.LENGTH_SHORT).show();
 				break;
 			}
@@ -169,9 +169,7 @@ public final class ConnectivityBT extends Activity {
 						Log.d(TAG,
 								"menu play - iniciando conexión con " + device.getAddress() + " " + device.getName());
 						new ConnectThread(device).start();
-						;
-						// mArrayAdapter.add(device.getName() + "\n" +
-						// device.getAddress());
+						
 					}
 				}
 
@@ -282,6 +280,7 @@ public final class ConnectivityBT extends Activity {
 			while (true) {
 				try {
 					socket = mmServerSocket.accept();
+					Log.i(TAG + " SERVER", "Incoming connection from: " + socket.getRemoteDevice().getAddress());
 				} catch (IOException e) {
 					break;
 				}
@@ -327,17 +326,26 @@ public final class ConnectivityBT extends Activity {
 		}
 
 		public void run() {
-			byte[] buffer = new String("Mensaje Bluetooth desde android").getBytes(); 
+			byte[] buffer = new String("Mensaje Bluetooth desde android").getBytes();
 			int bytes; // bytes returned from read()
 
 			Looper.prepare();
-			
-			
+
 			// Keep listening to the InputStream until an exception occurs
 			// while (true) {
 			try {
 
-				mmInStream.read(buffer);
+				buffer = new String("Mensaje Bluetooth desde un cliente android").getBytes(); 
+				
+				mmOutStream.write(buffer);
+
+				bytes = mmInStream.read(buffer);
+				String data = new String(buffer);
+
+				Log.i(TAG + " CLIENT", "Received " + bytes + " bytes from: " + mmSocket.getRemoteDevice().getAddress()+"("+mmSocket.getRemoteDevice().getName()+")");
+				Log.i(TAG + " CLIENT", "Received " + data);
+				
+				
 
 				Message msgObj = mHandler.obtainMessage();
 				msgObj.what = ConnectivityBT.MESSAGE_READ;
@@ -347,14 +355,6 @@ public final class ConnectivityBT extends Activity {
 				mHandler.sendMessage(msgObj);
 
 				Toast.makeText(getApplicationContext(), new String(buffer), Toast.LENGTH_LONG).show();
-				//
-				buffer = new String("Mensaje Bluetooth desde un cliente android").getBytes(); // buffer
-																								// store
-																								// for
-																								// the
-																								// stream
-				mmOutStream.write(buffer);
-				// Send the obtained bytes to the UI activity
 
 			} catch (IOException e) {
 				Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
@@ -401,7 +401,7 @@ public final class ConnectivityBT extends Activity {
 				tmpIn = socket.getInputStream();
 				tmpOut = socket.getOutputStream();
 			} catch (IOException e) {
-				
+
 			}
 
 			mmInStream = tmpIn;
@@ -412,18 +412,23 @@ public final class ConnectivityBT extends Activity {
 			byte[] buffer = new String("Bienvenido Bluetooth desde android").getBytes(); // buffer
 																							// store
 																							// for
-			Looper.prepare();																			// the
-																							// stream
+			Looper.prepare(); // the
+			// stream
 			int bytes; // bytes returned from read()
 
 			// Keep listening to the InputStream until an exception occurs
 			// while (true) {
 			try {
 				// Read from the InputStream
-				mmOutStream.write(buffer);
+				// mmOutStream.write(buffer);
 				// Send the obtained bytes to the UI activity
 
-				mmInStream.read(buffer);
+				bytes = mmInStream.read(buffer);
+
+				String data=new String(buffer);
+				
+				Log.i(TAG + " SERVER", "Received " + bytes + " bytes from: " + mmSocket.getRemoteDevice().getAddress()+"("+mmSocket.getRemoteDevice().getName()+")");
+				Log.i(TAG + " SERVER", "Received " + data);
 
 				Message msgObj = mHandler.obtainMessage();
 				msgObj.what = ConnectivityBT.MESSAGE_READ;
@@ -432,7 +437,11 @@ public final class ConnectivityBT extends Activity {
 				msgObj.setData(b);
 				mHandler.sendMessage(msgObj);
 
-				Toast.makeText(getApplicationContext(), new String(buffer), Toast.LENGTH_LONG).show();
+				//Toast.makeText(getApplicationContext(), data, Toast.LENGTH_LONG).show();
+				
+				buffer = ("OK "+data).getBytes(); 
+				
+				mmOutStream.write(buffer);
 
 			} catch (IOException e) {
 
