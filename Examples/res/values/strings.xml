@@ -23,6 +23,7 @@
     <string name="menu_searchWifi">Burcar redes</string>
     <string name="menu_searchBT">Burcar dispositivos BlueTooth</string>
     <string name="menu_startBT">Iniciar servidor BlueTooth</string>
+    <string name="menu_connectBT">Conectar con servidor BlueTooth</string>
     <string name="menu_graficos_drawresource">Dibujar desde recurso</string>
     <string name="menu_help">Ayuda</string>
     <string name="menu_generico">Elemento de menú</string>

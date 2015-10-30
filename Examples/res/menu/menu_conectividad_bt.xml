@@ -13,5 +13,11 @@
         android:orderInCategory="20"
         android:showAsAction="ifRoom"
         android:title="@string/menu_startBT"/>
+      <item
+        android:id="@+id/menu_connectBT"
+        android:icon="@drawable/ic_action_bluetooth"
+        android:orderInCategory="30"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_connectBT"/>
 
 </menu>
