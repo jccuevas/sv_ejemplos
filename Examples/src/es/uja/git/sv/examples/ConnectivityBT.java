@@ -113,9 +113,10 @@ public final class ConnectivityBT extends Activity {
 					// Add the name and address to an array adapter to
 					// show in a ListView
 
+					
 					mDeviceList.add(device);
 
-					mArrayAdapter.add(device.getName() + "\n" + device.getAddress() + "  RSSI: " + rssi + "dBm");
+					mArrayAdapter = new BluetoothListAdapter(getApplicationContext(),mDeviceList);
 					mList.setAdapter(mArrayAdapter);
 
 				}
@@ -174,8 +175,14 @@ public final class ConnectivityBT extends Activity {
 				Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 				// If there are paired devices
 				if (pairedDevices.size() > 0) {
+					
+					
 					// Loop through paired devices
 					for (BluetoothDevice device : pairedDevices) {
+						
+						mDeviceList.add(device);
+
+						
 						// Add the name and address to an array adapter to show
 						// in a ListView
 						Log.d(TAG,
@@ -183,6 +190,9 @@ public final class ConnectivityBT extends Activity {
 						new ConnectThread(device).start();
 
 					}
+					mArrayAdapter = new BluetoothListAdapter(getApplicationContext(),mDeviceList);
+					mList.setAdapter(mArrayAdapter);
+					mList.invalidate();
 				}
 
 			}
@@ -494,36 +504,39 @@ public final class ConnectivityBT extends Activity {
 	 */
 	public class BluetoothListAdapter extends BaseAdapter {
 
-		private final Context context;
-		private List<String> values = new ArrayList<String>(1);
+		private final Context mContext;
+		private List<BluetoothDevice> mValues = new ArrayList<BluetoothDevice>(1);
 
 		public static final int ROW_BACKGORUND_ALPHA = 50;
 		public static final int ROW_SELECTED_ALPHA = 80;
 
-		public BluetoothListAdapter(Context context, String[] values) {
+		public BluetoothListAdapter(Context context, List<BluetoothDevice> values) {
 			super();
-			this.context = context;
+			this.mContext = context;
 			if (values != null)
-				for (String v : values)
-					this.values.add(v);
+				this.mValues=values;
 
 		}
 
 		@TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
-			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			final View rowView = inflater.inflate(R.layout.lisview_row_btdevices, parent, false);
 
 			rowView.setClickable(true);
 			rowView.setFocusable(true);
 
-			TextView text = (TextView) rowView.findViewById(R.id.label);
-
-			text.setText(values.get(position));
+			TextView name = (TextView) rowView.findViewById(R.id.row_bt_name);
+			TextView mac = (TextView) rowView.findViewById(R.id.row_bt_mac);
+			//TextView rssi = (TextView) rowView.findViewById(R.id.row_bt_rssi);
+			
+			name.setText(mValues.get(position).getName());
+			mac.setText(mValues.get(position).getAddress());
+			//rssi.setText(mValues.get(position).getType()+" dBm");
 
 			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
-				final Drawable d1 = context.getResources().getDrawable(R.drawable.botonlista_blanco);
+				final Drawable d1 = mContext.getResources().getDrawable(R.drawable.botonlista_blanco);
 				rowView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
 					@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -540,7 +553,7 @@ public final class ConnectivityBT extends Activity {
 					}
 				});
 			} else {
-				final Drawable d2 = context.getResources().getDrawable(R.drawable.botonlista_blanco, null);
+				final Drawable d2 = mContext.getResources().getDrawable(R.drawable.botonlista_blanco, null);
 				rowView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
 					@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -580,16 +593,16 @@ public final class ConnectivityBT extends Activity {
 			return rowView;
 		}
 
-		public int add(String value)
+		public int add(BluetoothDevice value)
 		{
-			this.values.add(value);
+			this.mValues.add(value);
 			return 0;
 		}
 
 		@Override
 		public int getCount() {
-			if (this.values != null) {
-				return values.size();
+			if (this.mValues != null) {
+				return mValues.size();
 			} else {
 				return 0;
 			}
@@ -598,18 +611,18 @@ public final class ConnectivityBT extends Activity {
 		@Override
 		public Object getItem(int position) {
 
-			if (this.values != null)
+			if (this.mValues != null)
 
-				if (position < values.size())
-					return values.get(position);
+				if (position < mValues.size())
+					return mValues.get(position);
 
 			return null;
 		}
 
 		@Override
 		public long getItemId(int arg0) {
-			if (this.values != null)
-				if (arg0 < values.size())
+			if (this.mValues != null)
+				if (arg0 < mValues.size())
 					return arg0;
 
 			return -1;
