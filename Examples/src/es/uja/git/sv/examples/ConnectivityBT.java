@@ -10,8 +10,6 @@ import java.util.UUID;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
@@ -21,7 +19,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,10 +29,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -113,10 +110,9 @@ public final class ConnectivityBT extends Activity {
 					// Add the name and address to an array adapter to
 					// show in a ListView
 
-					
 					mDeviceList.add(device);
 
-					mArrayAdapter = new BluetoothListAdapter(getApplicationContext(),mDeviceList);
+					mArrayAdapter = new BluetoothListAdapter(getApplicationContext(), mDeviceList);
 					mList.setAdapter(mArrayAdapter);
 
 				}
@@ -161,6 +157,7 @@ public final class ConnectivityBT extends Activity {
 			Toast.makeText(this, this.getResources().getString(R.string.bluetooth_scanningdevices), Toast.LENGTH_LONG)
 					.show();
 
+			((TextView) findViewById(R.id.bluetooth_textview_devicelist)).setText(R.string.bluetooth_devicelist);
 			if (this.mIsBTEnabled && mReceiver != null) {
 				mArrayAdapter = new BluetoothListAdapter(this, null);
 
@@ -169,30 +166,27 @@ public final class ConnectivityBT extends Activity {
 				Log.d(TAG, "menu buscar - Buscando dispositivos");
 			}
 			return true;
-		case R.id.menu_connectBT:
+		case R.id.menu_searchBonded:
 			if (this.mIsBTEnabled && mReceiver != null) {
 
+				((TextView) findViewById(R.id.bluetooth_textview_devicelist))
+						.setText(R.string.bluetooth_bondeddevicelist);
 				Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 				// If there are paired devices
 				if (pairedDevices.size() > 0) {
-					
-					
+
 					// Loop through paired devices
 					for (BluetoothDevice device : pairedDevices) {
-						
+
+						// Adds the device to the list of the adapter
 						mDeviceList.add(device);
-
-						
-						// Add the name and address to an array adapter to show
-						// in a ListView
-						Log.d(TAG,
-								"menu play - iniciando conexión con " + device.getAddress() + " " + device.getName());
-						new ConnectThread(device).start();
-
 					}
-					mArrayAdapter = new BluetoothListAdapter(getApplicationContext(),mDeviceList);
+					mArrayAdapter = new BluetoothListAdapter(getApplicationContext(), mDeviceList);
 					mList.setAdapter(mArrayAdapter);
 					mList.invalidate();
+				} else {
+					Toast.makeText(this, getString(R.string.bluetooth_nobondeddevices), Toast.LENGTH_LONG).show();
+
 				}
 
 			}
@@ -496,6 +490,13 @@ public final class ConnectivityBT extends Activity {
 		}
 	}
 
+	static class ViewHolder {
+		TextView name;
+		TextView mac;
+		ImageButton btlogo;
+
+	}
+
 	/**
 	 * Adaptador para el la lista de dispositivos bluetooth
 	 * 
@@ -510,91 +511,62 @@ public final class ConnectivityBT extends Activity {
 		public static final int ROW_BACKGORUND_ALPHA = 50;
 		public static final int ROW_SELECTED_ALPHA = 80;
 
+		public static final String TAG = "CustomAdapter";
+		public int mConvertViewCounter = 0;
+
+		private LayoutInflater mInflater = null;
+
 		public BluetoothListAdapter(Context context, List<BluetoothDevice> values) {
 			super();
 			this.mContext = context;
+			mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			if (values != null)
-				this.mValues=values;
+				this.mValues = values;
 
 		}
 
 		@TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
-			LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			final View rowView = inflater.inflate(R.layout.lisview_row_btdevices, parent, false);
 
-			rowView.setClickable(true);
-			rowView.setFocusable(true);
+			ViewHolder holder;
 
-			TextView name = (TextView) rowView.findViewById(R.id.row_bt_name);
-			TextView mac = (TextView) rowView.findViewById(R.id.row_bt_mac);
-			//TextView rssi = (TextView) rowView.findViewById(R.id.row_bt_rssi);
-			
-			name.setText(mValues.get(position).getName());
-			mac.setText(mValues.get(position).getAddress());
-			//rssi.setText(mValues.get(position).getType()+" dBm");
+			if (convertView == null) {
+				convertView = mInflater.inflate(R.layout.lisview_row_btdevices, null);
 
-			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
-				final Drawable d1 = mContext.getResources().getDrawable(R.drawable.botonlista_blanco);
-				rowView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+				// convertViewCounter++;
+				// Log.v(TAG, convertViewCounter + " convertViews have been
+				// created");
 
-					@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+				holder = new ViewHolder();
+
+				holder.name = (TextView) convertView.findViewById(R.id.row_bt_name);
+				holder.mac = (TextView) convertView.findViewById(R.id.row_bt_mac);
+				holder.btlogo = (ImageButton) convertView.findViewById(R.id.row_bt_connect);
+
+				holder.btlogo.setOnClickListener(new OnClickListener() {
+
 					@Override
-					public void onFocusChange(View v, boolean hasFocus) {
-						if (hasFocus) {
+					public void onClick(View v) {
+						Log.d(TAG, "Click BT logo - iniciando conexión con " + mValues.get(position).getAddress() + " "
+								+ mValues.get(position).getName());
+						new ConnectThread(mValues.get(position)).start();
 
-							if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
-
-								rowView.setBackgroundDrawable(d1);
-							else
-								rowView.setBackground(d1);
-						}
 					}
 				});
+				convertView.setTag(holder);
+
 			} else {
-				final Drawable d2 = mContext.getResources().getDrawable(R.drawable.botonlista_blanco, null);
-				rowView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+				holder = (ViewHolder) convertView.getTag();
 
-					@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-					@Override
-					public void onFocusChange(View v, boolean hasFocus) {
-						if (hasFocus) {
-
-							if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
-
-								rowView.setBackgroundDrawable(d2);
-							else
-								rowView.setBackground(d2);
-
-						}
-					}
-				});
-
+				holder.name.setText(mValues.get(position).getName());
+				holder.mac.setText(mValues.get(position).getAddress());
 			}
 
-			rowView.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					switch (position) {
-					case 0:
-
-						break;
-					case 1:
-
-						break;
-
-					}
-
-				}
-			});
-
-			return rowView;
+			return convertView;
 		}
 
-		public int add(BluetoothDevice value)
-		{
+		public int add(BluetoothDevice value) {
 			this.mValues.add(value);
 			return 0;
 		}

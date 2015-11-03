@@ -115,8 +115,11 @@
     <string name="connectivity_wifi">Redes WiFi</string>
     <string name="connectivity_bluetooth">Bluetooth</string>
     <string name="bluetooth_scanningdevices">Buscando dispositivos Bluetooth</string>
+    <string name="bluetooth_scanningbondendevices">Dispositivos vinculados</string>
     <string name="connectivity_bt_notsupported">El dispositivo no soporta Bluetooth</string>
     <string name="bluetooth_devicelist">Dispositivos detectados</string>
+    <string name="bluetooth_bondeddevicelist">Dispositivos vinculados</string>
+    <string name="bluetooth_nobondeddevices">No hay dispositivos vinculados detectados</string>
     <string name="row_bt_name">Device name</string>
     <string name="row_bt_mac">BT device MAC</string>
     <string name="bt_device_rssi">RSSI</string>

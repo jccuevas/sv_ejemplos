@@ -7,7 +7,7 @@
     android:orientation="horizontal"
     android:padding="2dp" >
 
-    <ImageView
+    <ImageButton
         android:id="@+id/row_bt_connect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,23 +18,10 @@
         android:src="@drawable/ic_bluetooth" />
 
     <TextView
-        android:id="@+id/row_bt_rssi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/shape1"
-        android:text="@string/bt_device_rssi"
-        android:textAppearance="@style/blueLarge" />
-
-    <TextView
         android:id="@+id/row_bt_mac"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/row_bt_name"
-        android:layout_toRightOf="@+id/row_bt_rssi"
-        android:layout_toEndOf="@+id/row_bt_rssi"
         android:text="@string/row_bt_mac"
         android:textAppearance="@style/blueSmall" />
 

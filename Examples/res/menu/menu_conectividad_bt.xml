@@ -14,10 +14,10 @@
         android:showAsAction="ifRoom"
         android:title="@string/menu_startBT"/>
       <item
-        android:id="@+id/menu_connectBT"
+        android:id="@+id/menu_searchBonded"
         android:icon="@drawable/ic_action_bluetooth"
         android:orderInCategory="30"
         android:showAsAction="ifRoom"
-        android:title="@string/menu_connectBT"/>
+        android:title="@string/bluetooth_scanningbondendevices"/>
 
 </menu>
