@@ -8,7 +8,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
@@ -18,15 +21,23 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public final class ConnectivityBT extends Activity {
@@ -40,7 +51,7 @@ public final class ConnectivityBT extends Activity {
 	private BluetoothAdapter mBluetoothAdapter;
 	private boolean mIsBTEnabled = false;
 	private BroadcastReceiver mReceiver = null;
-	private ArrayAdapter<String> mArrayAdapter = null;
+	private BluetoothListAdapter mArrayAdapter = null;
 
 	private List<BluetoothDevice> mDeviceList = new ArrayList<BluetoothDevice>(0);
 
@@ -55,8 +66,9 @@ public final class ConnectivityBT extends Activity {
 
 				Bundle data = msg.getData();
 				// ALERT MESSAGE
-				Toast.makeText(getBaseContext(), "Server Response: " + new String(data.getByteArray(MESSAGE_KEY_DATAREAD)),
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(getBaseContext(),
+						"Server Response: " + new String(data.getByteArray(MESSAGE_KEY_DATAREAD)), Toast.LENGTH_SHORT)
+						.show();
 				break;
 			}
 
@@ -70,7 +82,7 @@ public final class ConnectivityBT extends Activity {
 
 		// Setup UI
 		mList = (ListView) findViewById(R.id.bluetooth_listview_result);
-		mArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+		mArrayAdapter = new BluetoothListAdapter(this, null);
 
 		mList.setAdapter(mArrayAdapter);
 		// Setup Bluetooth
@@ -149,7 +161,7 @@ public final class ConnectivityBT extends Activity {
 					.show();
 
 			if (this.mIsBTEnabled && mReceiver != null) {
-				mArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+				mArrayAdapter = new BluetoothListAdapter(this, null);
 
 				mDeviceList.clear();
 				mBluetoothAdapter.startDiscovery();
@@ -169,7 +181,7 @@ public final class ConnectivityBT extends Activity {
 						Log.d(TAG,
 								"menu play - iniciando conexión con " + device.getAddress() + " " + device.getName());
 						new ConnectThread(device).start();
-						
+
 					}
 				}
 
@@ -335,17 +347,16 @@ public final class ConnectivityBT extends Activity {
 			// while (true) {
 			try {
 
-				buffer = new String("Mensaje Bluetooth desde un cliente android").getBytes(); 
-				
+				buffer = new String("Mensaje Bluetooth desde un cliente android").getBytes();
+
 				mmOutStream.write(buffer);
 
 				bytes = mmInStream.read(buffer);
 				String data = new String(buffer);
 
-				Log.i(TAG + " CLIENT", "Received " + bytes + " bytes from: " + mmSocket.getRemoteDevice().getAddress()+"("+mmSocket.getRemoteDevice().getName()+")");
+				Log.i(TAG + " CLIENT", "Received " + bytes + " bytes from: " + mmSocket.getRemoteDevice().getAddress()
+						+ "(" + mmSocket.getRemoteDevice().getName() + ")");
 				Log.i(TAG + " CLIENT", "Received " + data);
-				
-				
 
 				Message msgObj = mHandler.obtainMessage();
 				msgObj.what = ConnectivityBT.MESSAGE_READ;
@@ -425,9 +436,10 @@ public final class ConnectivityBT extends Activity {
 
 				bytes = mmInStream.read(buffer);
 
-				String data=new String(buffer);
-				
-				Log.i(TAG + " SERVER", "Received " + bytes + " bytes from: " + mmSocket.getRemoteDevice().getAddress()+"("+mmSocket.getRemoteDevice().getName()+")");
+				String data = new String(buffer);
+
+				Log.i(TAG + " SERVER", "Received " + bytes + " bytes from: " + mmSocket.getRemoteDevice().getAddress()
+						+ "(" + mmSocket.getRemoteDevice().getName() + ")");
 				Log.i(TAG + " SERVER", "Received " + data);
 
 				Message msgObj = mHandler.obtainMessage();
@@ -437,10 +449,11 @@ public final class ConnectivityBT extends Activity {
 				msgObj.setData(b);
 				mHandler.sendMessage(msgObj);
 
-				//Toast.makeText(getApplicationContext(), data, Toast.LENGTH_LONG).show();
-				
-				buffer = ("OK "+data).getBytes(); 
-				
+				// Toast.makeText(getApplicationContext(), data,
+				// Toast.LENGTH_LONG).show();
+
+				buffer = ("OK " + data).getBytes();
+
 				mmOutStream.write(buffer);
 
 			} catch (IOException e) {
@@ -471,5 +484,136 @@ public final class ConnectivityBT extends Activity {
 			} catch (IOException e) {
 			}
 		}
+	}
+
+	/**
+	 * Adaptador para el la lista de dispositivos bluetooth
+	 * 
+	 * @author Juan Carlos
+	 * 
+	 */
+	public class BluetoothListAdapter extends BaseAdapter {
+
+		private final Context context;
+		private List<String> values = new ArrayList<String>(1);
+
+		public static final int ROW_BACKGORUND_ALPHA = 50;
+		public static final int ROW_SELECTED_ALPHA = 80;
+
+		public BluetoothListAdapter(Context context, String[] values) {
+			super();
+			this.context = context;
+			if (values != null)
+				for (String v : values)
+					this.values.add(v);
+
+		}
+
+		@TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
+		@Override
+		public View getView(final int position, View convertView, ViewGroup parent) {
+			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			final View rowView = inflater.inflate(R.layout.lisview_row_btdevices, parent, false);
+
+			rowView.setClickable(true);
+			rowView.setFocusable(true);
+
+			TextView text = (TextView) rowView.findViewById(R.id.label);
+
+			text.setText(values.get(position));
+
+			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+				final Drawable d1 = context.getResources().getDrawable(R.drawable.botonlista_blanco);
+				rowView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+					@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+					@Override
+					public void onFocusChange(View v, boolean hasFocus) {
+						if (hasFocus) {
+
+							if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+
+								rowView.setBackgroundDrawable(d1);
+							else
+								rowView.setBackground(d1);
+						}
+					}
+				});
+			} else {
+				final Drawable d2 = context.getResources().getDrawable(R.drawable.botonlista_blanco, null);
+				rowView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+					@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+					@Override
+					public void onFocusChange(View v, boolean hasFocus) {
+						if (hasFocus) {
+
+							if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+
+								rowView.setBackgroundDrawable(d2);
+							else
+								rowView.setBackground(d2);
+
+						}
+					}
+				});
+
+			}
+
+			rowView.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					switch (position) {
+					case 0:
+
+						break;
+					case 1:
+
+						break;
+
+					}
+
+				}
+			});
+
+			return rowView;
+		}
+
+		public int add(String value)
+		{
+			this.values.add(value);
+			return 0;
+		}
+
+		@Override
+		public int getCount() {
+			if (this.values != null) {
+				return values.size();
+			} else {
+				return 0;
+			}
+		}
+
+		@Override
+		public Object getItem(int position) {
+
+			if (this.values != null)
+
+				if (position < values.size())
+					return values.get(position);
+
+			return null;
+		}
+
+		@Override
+		public long getItemId(int arg0) {
+			if (this.values != null)
+				if (arg0 < values.size())
+					return arg0;
+
+			return -1;
+		}
+
 	}
 }

@@ -117,5 +117,8 @@
     <string name="bluetooth_scanningdevices">Buscando dispositivos Bluetooth</string>
     <string name="connectivity_bt_notsupported">El dispositivo no soporta Bluetooth</string>
     <string name="bluetooth_devicelist">Dispositivos detectados</string>
+    <string name="row_bt_name">Device name</string>
+    <string name="row_bt_mac">BT device MAC</string>
+    <string name="bt_device_rssi">RSSI</string>
 
 </resources>

@@ -51,6 +51,8 @@ public class FragmentLista extends ListFragment {
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString() + " must implement OnFragmentInteractionListener");
 		}
+		Mensaje m;
+		
 	}
 
 

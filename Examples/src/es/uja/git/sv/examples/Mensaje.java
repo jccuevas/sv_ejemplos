@@ -7,6 +7,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Date;
 
+/**
+ * Esta clase sirve para modelas los mensajes de un protcolo ficticio tipo al del ejercicio 1
+ * @author Juan Carlos
+ *
+ */
 public class Mensaje {
 
 	protected static int secuencia;
@@ -28,7 +33,10 @@ public class Mensaje {
 	
 		
 	}
-	
+	/**
+	 * Este método genera un array de bytes con la PDU del protocolo
+	 * @return el array con los datos del mensaje
+	 */
 	public byte[] toByteArray()
 	{
 		ByteArrayOutputStream bos = new ByteArrayOutputStream(5);
