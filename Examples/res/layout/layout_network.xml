@@ -14,20 +14,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal" >
+        android:orientation="vertical" >
 
         <fragment
             android:id="@+id/layout_fragment_network_navigation"
             android:name="es.uja.git.sv.examples.NetworkNavigationFragment"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1" />
 
         <fragment
             android:id="@+id/layout_fragment_network_web"
             android:name="es.uja.git.sv.examples.NetworkWebFragment"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="2" />
 
     </LinearLayout>

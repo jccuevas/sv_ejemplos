@@ -36,14 +36,12 @@ import es.uja.git.sv.examples.R;
 public class Network extends Activity {
 	private static final String DEBUG_TAG = null;
 
-	private ProgressBar progressBar=null;
+	private ProgressBar progressBar = null;
 	private NetworkWebFragment web = null;
-	private DownloadWebpageText task=null;
-	private EditText	postParams=null;
-	private WebView 	webView=null;
+	private DownloadWebpageText task = null;
+	private EditText postParams = null;
+	private WebView webView = null;
 
-
-	
 	boolean conectado = false;
 
 	private PostQuery taskPost;
@@ -54,8 +52,7 @@ public class Network extends Activity {
 		setContentView(R.layout.layout_network);
 
 		FragmentManager fm = getFragmentManager();
-		web = (NetworkWebFragment) fm
-				.findFragmentById(R.id.layout_fragment_network_web);
+		web = (NetworkWebFragment) fm.findFragmentById(R.id.layout_fragment_network_web);
 
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -68,31 +65,27 @@ public class Network extends Activity {
 			conectado = false;
 			Toast.makeText(this, "No Conectado", Toast.LENGTH_LONG).show();
 		}
-		
-		
-		webView = (WebView) findViewById(R.id.network_web_webView);
-		//WebSettings webSettings = webView.getSettings();
-		//webSettings.setJavaScriptEnabled(true);
-		
-		final NetworkURLFragment uri = (NetworkURLFragment) fm
-				.findFragmentById(R.id.layout_fragment_network_URL);
 
-		
-		
-		postParams = (EditText)findViewById(R.id.network_navigation_edittext_postparams);
-		
+		webView = (WebView) findViewById(R.id.network_web_webView);
+		// WebSettings webSettings = webView.getSettings();
+		// webSettings.setJavaScriptEnabled(true);
+
+		final NetworkURLFragment uri = (NetworkURLFragment) fm.findFragmentById(R.id.layout_fragment_network_URL);
+
+		postParams = (EditText) findViewById(R.id.network_navigation_edittext_postparams);
+
 		progressBar = (ProgressBar) findViewById(R.id.network_url_downloadprogress);
-		
-		Button go = (Button)findViewById(R.id.network_url_browse);
-		go.setOnClickListener(new OnClickListener(){
-			public void onClick(View view)
-			{
-				if (uri != null) {	
+
+		Button go = (Button) findViewById(R.id.network_url_browse);
+		go.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				if (uri != null) {
 					webView.setWebViewClient(new WebViewClient() {
-						   public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-						     Toast.makeText(Network.this, "Oh no! " + description, Toast.LENGTH_SHORT).show();
-						   }
-						 });
+						public void onReceivedError(WebView view, int errorCode, String description,
+								String failingUrl) {
+							Toast.makeText(Network.this, "Oh no! " + description, Toast.LENGTH_SHORT).show();
+						}
+					});
 
 					webView.loadUrl(uri.getURLString());
 				}
@@ -115,9 +108,8 @@ public class Network extends Activity {
 
 			// params comes from the execute() call: params[0] is the url.
 			try {
-				String data=downloadUrl((String) urls[0]);
-				
-				
+				String data = downloadUrl((String) urls[0]);
+
 				return data;
 			} catch (IOException e) {
 				return "Unable to retrieve web page. URL may be invalid.";
@@ -136,20 +128,18 @@ public class Network extends Activity {
 			progressBar.postInvalidate();
 			super.onProgressUpdate(values);
 		}
-		
 
 	}
-	
-	
+
 	private class PostQuery extends AsyncTask<String, Integer, String> {
 		@Override
 		protected String doInBackground(String... urls) {
 
 			// params comes from the execute() call: params[0] is the url.
 			try {
-				if(urls.length>=2)
-					
-				return downloadUrlByPost((String) urls[0],urls[1]);
+				if (urls.length >= 2)
+
+					return downloadUrlByPost((String) urls[0], urls[1]);
 				else
 					return null;
 			} catch (IOException e) {
@@ -169,14 +159,12 @@ public class Network extends Activity {
 			progressBar.postInvalidate();
 			super.onProgressUpdate(values);
 		}
-		
 
 	}
-	
 
 	private class SocketConnection extends AsyncTask<URL, String, String> {
-		ProgressDialog pbar=null;
-		
+		ProgressDialog pbar = null;
+
 		@Override
 		protected String doInBackground(URL... urls) {
 
@@ -186,24 +174,20 @@ public class Network extends Activity {
 
 		}
 
-		
-		
 		@Override
 		protected void onPreExecute() {
-			
-				pbar = new ProgressDialog(Network.this);
-				pbar.setIndeterminate(true);
-				pbar.setMessage(getBaseContext().getString(R.string.socket_downloading));
 
-				pbar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-				pbar.setCancelable(false);
-				if (!pbar.isShowing()) {
-					pbar.show();
-				}
+			pbar = new ProgressDialog(Network.this);
+			pbar.setIndeterminate(true);
+			pbar.setMessage(getBaseContext().getString(R.string.socket_downloading));
+
+			pbar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			pbar.setCancelable(false);
+			if (!pbar.isShowing()) {
+				pbar.show();
+			}
 			super.onPreExecute();
 		}
-
-
 
 		@Override
 		protected void onProgressUpdate(String... values) {
@@ -211,12 +195,10 @@ public class Network extends Activity {
 			super.onProgressUpdate(values);
 		}
 
-
-
 		// onPostExecute displays the results of the AsyncTask.
 		protected void onPostExecute(final String result) {
 			web.setText(result);
-			if(pbar!=null)
+			if (pbar != null)
 				pbar.dismiss();
 
 		}
@@ -231,8 +213,7 @@ public class Network extends Activity {
 	public void onConnectHTTP(View view) {
 		FragmentManager fm = getFragmentManager();
 
-		NetworkURLFragment uri = (NetworkURLFragment) fm
-				.findFragmentById(R.id.layout_fragment_network_URL);
+		NetworkURLFragment uri = (NetworkURLFragment) fm.findFragmentById(R.id.layout_fragment_network_URL);
 
 		if (uri != null) {
 
@@ -244,7 +225,7 @@ public class Network extends Activity {
 		}
 
 	}
-	
+
 	/**
 	 * Se ejecuta al pulsar el botón conectar con get
 	 * 
@@ -253,15 +234,14 @@ public class Network extends Activity {
 	public void onConnectHTTPPost(View view) {
 		FragmentManager fm = getFragmentManager();
 
-		NetworkURLFragment uri = (NetworkURLFragment) fm
-				.findFragmentById(R.id.layout_fragment_network_URL);
+		NetworkURLFragment uri = (NetworkURLFragment) fm.findFragmentById(R.id.layout_fragment_network_URL);
 
 		if (uri != null) {
 
 			progressBar.setProgress(0);
 			web.setText("");
 			taskPost = new PostQuery();
-			taskPost.execute(uri.getURLString(),postParams.getEditableText().toString());
+			taskPost.execute(uri.getURLString(), postParams.getEditableText().toString());
 
 		}
 
@@ -274,8 +254,7 @@ public class Network extends Activity {
 	 */
 	public void onConnectSocket(View view) {
 		FragmentManager fm = getFragmentManager();
-		NetworkURLFragment urifragment = (NetworkURLFragment) fm
-				.findFragmentById(R.id.layout_fragment_network_URL);
+		NetworkURLFragment urifragment = (NetworkURLFragment) fm.findFragmentById(R.id.layout_fragment_network_URL);
 
 		if (urifragment != null) {
 
@@ -288,7 +267,7 @@ public class Network extends Activity {
 		}
 
 	}
-	
+
 	/**
 	 * Se ejecuta al pulsar el botón conectar
 	 * 
@@ -296,15 +275,13 @@ public class Network extends Activity {
 	 */
 	public void onNetworkService(View view) {
 		FragmentManager fm = getFragmentManager();
-		NetworkURLFragment urifragment = (NetworkURLFragment) fm
-				.findFragmentById(R.id.layout_fragment_network_URL);
+		NetworkURLFragment urifragment = (NetworkURLFragment) fm.findFragmentById(R.id.layout_fragment_network_URL);
 
 		if (urifragment != null) {
 
-			//web.setText("");
-			//URL url = urifragment.getURI();
+			// web.setText("");
+			// URL url = urifragment.getURI();
 
-			
 			Intent intent = new Intent(this, Download.class);
 			intent.putExtra(Download.PARAMETER_URL, urifragment.getURI().toString());
 			startService(intent);
@@ -316,36 +293,42 @@ public class Network extends Activity {
 	public String conectaSocket(URL url) {
 
 		if (url != null) {
-			String contentAsString="";
+			String contentAsString = "";
 			Socket s = new Socket();
 			InputStream is;
 			DataOutputStream dos;
 
 			try {
-				int port=url.getPort();
+				String line = null;
+				int port = url.getPort();
 				s = new Socket(url.getHost(), port);
-				
-				
+
 				is = s.getInputStream();
 				dos = new DataOutputStream(s.getOutputStream());
 
-				dos.writeUTF("get /index.html HTTP/1.1\r\nHOST=www.ujaen.es\r\n");
+				dos.writeUTF("GET / HTTP/1.1\r\nHOST=www10.ujaen.es\r\n");
 				dos.flush();
-				
-				// Convert the InputStream into a string
-				
-				contentAsString=contentAsString+readIt(is,100);
-				
+
+				BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+
+				while ((line = reader.readLine()) != null) {
+					line = line + "\r\n";
+
+					if (line.contains("Content-Length")) {
+						String datalength= line.substring(line.indexOf("Content-Length"));
+					}
+					contentAsString = contentAsString + line;
+				}
 				dos.close();
 				is.close();
 				s.close();
 				return contentAsString;
 			} catch (IOException e) {
 				return e.getMessage();
-				
+
 			} catch (IllegalArgumentException e) {
 				return e.getMessage();
-				
+
 			}
 		}
 		return "Conexión fallida";
@@ -358,14 +341,13 @@ public class Network extends Activity {
 	private String downloadUrl(String myurl) throws IOException {
 		InputStream is = null;
 		String result = "";
-		
+
 		HttpURLConnection conn = null;
 		try {
-			String contentAsString="";
-			String tempString="";
+			String contentAsString = "";
+			String tempString = "";
 			URL url = new URL(myurl);
-			System.out.println("Abriendo conexión: " + url.getHost()
-					+ " puerto=" + url.getPort());
+			System.out.println("Abriendo conexión: " + url.getHost() + " puerto=" + url.getPort());
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setReadTimeout(10000 /* milliseconds */);
 			conn.setConnectTimeout(15000 /* milliseconds */);
@@ -374,25 +356,24 @@ public class Network extends Activity {
 			// Starts the query
 			conn.connect();
 			final int response = conn.getResponseCode();
-			final int contentLength = conn.getHeaderFieldInt("Content-length",1000);
-			String mimeType=conn.getHeaderField("Content-Type");
-			String encoding=mimeType.substring(mimeType.indexOf(";"));
+			final int contentLength = conn.getHeaderFieldInt("Content-length", 1000);
+			String mimeType = conn.getHeaderField("Content-Type");
+			String encoding = mimeType.substring(mimeType.indexOf(";"));
 			progressBar.setMax(contentLength);
-			
+
 			Log.d(DEBUG_TAG, "The response is: " + response);
 			is = conn.getInputStream();
 
-			BufferedReader br = new BufferedReader( new InputStreamReader(is, "UTF-8"));
-			
-			while((tempString=br.readLine())!=null)
-			{
-				 contentAsString = contentAsString + tempString;
-				 task.onProgressUpdate(contentAsString.length());
+			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+
+			while ((tempString = br.readLine()) != null) {
+				contentAsString = contentAsString + tempString;
+				task.onProgressUpdate(contentAsString.length());
 			}
-			
+
 			webView.loadData(contentAsString, mimeType, encoding);
-			//Convert the InputStream into a string
-			
+			// Convert the InputStream into a string
+
 			return contentAsString;
 		} catch (IOException e) {
 			result = "Excepción: " + e.getMessage();
@@ -409,56 +390,51 @@ public class Network extends Activity {
 		return result;
 	}
 
-	
-
 	// Given a URL, establishes an HttpUrlConnection and retrieves
 	// the web page content as a InputStream, which it returns as
 	// a string.
-	private String downloadUrlByPost(String myurl,String postparam) throws IOException {
+	private String downloadUrlByPost(String myurl, String postparam) throws IOException {
 		InputStream is = null;
 		String result = "";
-		
+
 		HttpURLConnection conn = null;
 		try {
-			String contentAsString="";
-			String tempString="";
+			String contentAsString = "";
+			String tempString = "";
 			URL url = new URL(myurl);
-			System.out.println("Abriendo conexión: " + url.getHost()
-					+ " puerto=" + url.getPort());
+			System.out.println("Abriendo conexión: " + url.getHost() + " puerto=" + url.getPort());
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setReadTimeout(10000 /* milliseconds */);
 			conn.setConnectTimeout(15000 /* milliseconds */);
 			conn.setRequestMethod("POST");
-			
+
 			conn.setDoInput(true);
 			conn.setDoOutput(true);
 
-		      //Send request
+			// Send request
 			OutputStream os = conn.getOutputStream();
-			BufferedWriter wr = new BufferedWriter(
-			        new OutputStreamWriter(os, "UTF-8"));
-			
-		      wr.write(postparam);
-		      wr.flush();
-		      wr.close ();
+			BufferedWriter wr = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+
+			wr.write(postparam);
+			wr.flush();
+			wr.close();
 			// Starts the query
 			conn.connect();
 			final int response = conn.getResponseCode();
-			final int contentLength = conn.getHeaderFieldInt("Content-length",1000);
+			final int contentLength = conn.getHeaderFieldInt("Content-length", 1000);
 			progressBar.setMax(contentLength);
-			
+
 			Log.d(DEBUG_TAG, "The response is: " + response);
 			is = conn.getInputStream();
 
-			BufferedReader br = new BufferedReader( new InputStreamReader(is, "UTF-8"));
-			
-			while((tempString=br.readLine())!=null)
-			{
-				 contentAsString = contentAsString + tempString;
-				 taskPost.onProgressUpdate(contentAsString.length());
+			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+
+			while ((tempString = br.readLine()) != null) {
+				contentAsString = contentAsString + tempString;
+				taskPost.onProgressUpdate(contentAsString.length());
 			}
-			
-			//Convert the InputStream into a string
+
+			// Convert the InputStream into a string
 			// contentAsString = readIt(is, len);
 			return contentAsString;
 		} catch (IOException e) {
@@ -475,14 +451,6 @@ public class Network extends Activity {
 		}
 		return result;
 	}
-	// Reads an InputStream and converts it to a String.
-	public String readIt(InputStream stream, int len) throws IOException,
-			UnsupportedEncodingException {
-		Reader reader = null;
-		reader = new InputStreamReader(stream, "UTF-8");
-		char[] buffer = new char[len];
-		
-		reader.read(buffer);
-		return new String(buffer);
-	}
+
+	
 }
