@@ -15,6 +15,7 @@ import java.net.Socket;
 import java.net.URL;
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -174,6 +175,8 @@ public class Network extends Activity {
 	
 
 	private class SocketConnection extends AsyncTask<URL, String, String> {
+		ProgressDialog pbar=null;
+		
 		@Override
 		protected String doInBackground(URL... urls) {
 
@@ -183,10 +186,38 @@ public class Network extends Activity {
 
 		}
 
-		// onPostExecute displays the results of the AsyncTask.
+		
+		
+		@Override
+		protected void onPreExecute() {
+			
+				pbar = new ProgressDialog(Network.this);
+				pbar.setIndeterminate(true);
+				pbar.setMessage(getBaseContext().getString(R.string.socket_downloading));
 
+				pbar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+				pbar.setCancelable(false);
+				if (!pbar.isShowing()) {
+					pbar.show();
+				}
+			super.onPreExecute();
+		}
+
+
+
+		@Override
+		protected void onProgressUpdate(String... values) {
+			// TODO Auto-generated method stub
+			super.onProgressUpdate(values);
+		}
+
+
+
+		// onPostExecute displays the results of the AsyncTask.
 		protected void onPostExecute(final String result) {
 			web.setText(result);
+			if(pbar!=null)
+				pbar.dismiss();
 
 		}
 

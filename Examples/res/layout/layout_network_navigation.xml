@@ -57,40 +57,67 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp" />
 
-    <TextView
-        android:id="@+id/fragmentinfo_helptext"
+    <LinearLayout
+        android:id="@+id/network_buttons"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ff33b5e5"
-        android:padding="5dp"
-        android:text="@string/fragment_navigation_usandoSockets"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_height="wrap_content" 
+         android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/framentmenu_launchbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="@drawable/shape_blue"
-        android:onClick="onConnectSocket"
-        android:text="@string/fragment_navigation_connect" />
+        <LinearLayout
+            android:id="@+id/network_buttons_sockets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" 
+            android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ff33b5e5"
-        android:padding="5dp"
-        android:text="@string/fragment_navigation_startservice"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+            <TextView
+                android:id="@+id/fragmentinfo_helptext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#ff33b5e5"
+                android:padding="5dp"
+                android:text="@string/fragment_navigation_usandoSockets"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="@drawable/shape_blue"
-        android:onClick="onNetworkService"
-        android:text="@string/fragment_navigation_connect" />
+            <Button
+                android:id="@+id/framentmenu_launchbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/shape_blue"
+                android:onClick="onConnectSocket"
+                android:text="@string/fragment_navigation_connect" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/network_buttons_services"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            
+            android:orientation="vertical" 
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#ff33b5e5"
+                android:padding="5dp"
+                android:text="@string/fragment_navigation_startservice"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/shape_blue"
+                android:onClick="onNetworkService"
+                android:text="@string/fragment_navigation_connect" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
