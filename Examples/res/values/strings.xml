@@ -74,12 +74,12 @@
     <string name="graficos_transition">Transición</string>
     <string name="network_url_URL">URL</string>
     <string name="hint_network_url_URL">introduce la url</string>
-    <string name="fragment_navigation_connect">Usar Get</string>
-    <string name="fragment_navigation_post">Usar Post</string>
+    <string name="fragment_navigation_connect">GET</string>
+    <string name="fragment_navigation_post">POST</string>
     <string name="fragment_navigation_postparams">Datos post</string>
     <string name="fragment_navigation_UsandoHTTP">Usando HTTP</string>
     <string name="fragment_navigation_usandoSockets">Usando Sockets</string>
-    <string name="fragment_url_inicio">http://150.214.170.105:80</string>
+    <string name="fragment_url_inicio">http://www10.ujaen.es:80</string>
     <string name="connectivity_scan">Buscar</string>
     <string name="connectivity_result">resultado&#8230;</string>
     <string name="connectivity_code_startscan">Buscando redes wifi cercanas&#8230;</string>

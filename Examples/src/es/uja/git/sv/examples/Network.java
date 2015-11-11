@@ -306,7 +306,12 @@ public class Network extends Activity {
 				is = s.getInputStream();
 				dos = new DataOutputStream(s.getOutputStream());
 
-				dos.writeUTF("GET / HTTP/1.1\r\nHOST=www10.ujaen.es\r\n");
+				dos.writeUTF("GET / HTTP/1.1\r\n"
+						+ "HOST=www10.ujaen.es\r\n"
+						+"Connection: close\r\n"
+						+"Accept: text/*\r\n"
+						+"User-Agent: UJAClient (Windows NT 10.0; WOW64)\r\n"
+						+"Accept-Language: es-ES,es;q=0.8,en;q=0.6");
 				dos.flush();
 
 				BufferedReader reader = new BufferedReader(new InputStreamReader(is));
