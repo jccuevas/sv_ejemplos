@@ -83,8 +83,10 @@ public class Network extends Activity {
 					boolean failover = extras.getBoolean("failover");
 					boolean noConnectivity = extras.getBoolean("noConnectivity");
 					NetworkInfo ninfo =extras.getParcelable("networkInfo");
-					if(ninfo!=null)
-						Toast.makeText(Network.this, "Cambio en la conexión"+ninfo.getTypeName(), Toast.LENGTH_LONG).show();
+					if(ninfo!=null && noConnectivity)
+						Toast.makeText(Network.this, "Cambio en la conexión "+ninfo.getTypeName()+" [ACTIVA]", Toast.LENGTH_LONG).show();
+					else
+						Toast.makeText(Network.this, "Cambio en la conexión "+ninfo.getTypeName()+" [INACTIVA]", Toast.LENGTH_LONG).show();
 				} else
 					Toast.makeText(Network.this, "Cambio en la conexión", Toast.LENGTH_LONG).show();
 
