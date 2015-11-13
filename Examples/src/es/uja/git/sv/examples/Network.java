@@ -16,10 +16,13 @@ import java.net.URL;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,7 +37,7 @@ import android.widget.Toast;
 import es.uja.git.sv.examples.R;
 
 public class Network extends Activity {
-	private static final String DEBUG_TAG = null;
+	private static final String DEBUG_TAG = "NETWORK ACTIVITY";
 
 	private ProgressBar progressBar = null;
 	private NetworkWebFragment web = null;
@@ -45,6 +48,8 @@ public class Network extends Activity {
 	boolean conectado = false;
 
 	private PostQuery taskPost;
+
+	private BroadcastReceiver mReceiver = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +70,23 @@ public class Network extends Activity {
 			conectado = false;
 			Toast.makeText(this, "No Conectado", Toast.LENGTH_LONG).show();
 		}
+
+		mReceiver = new BroadcastReceiver() {
+
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				Bundle extras = intent.getExtras();
+
+				if (extras != null) {
+					boolean a = extras.getBoolean("FAILOVER_CONNECTION");
+				}
+				Toast.makeText(Network.this, "Cambio en la conexión", Toast.LENGTH_LONG).show();
+
+			}
+		};
+
+		registerReceiver(mReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+		Log.d(DEBUG_TAG, "onCreate()");
 
 		webView = (WebView) findViewById(R.id.network_web_webView);
 		// WebSettings webSettings = webView.getSettings();
@@ -93,6 +115,13 @@ public class Network extends Activity {
 		});
 	}
 
+	@Override
+	protected void onDestroy() {
+		if (mReceiver != null)
+			unregisterReceiver(mReceiver);
+		super.onDestroy();
+	}
+
 	// Uses AsyncTask to create a task away from the main UI thread. This task
 	// takes a
 	// URL string and uses it to create an HttpUrlConnection. Once the
@@ -103,21 +132,61 @@ public class Network extends Activity {
 	// which is
 	// displayed in the UI by the AsyncTask's onPostExecute method.
 	private class DownloadWebpageText extends AsyncTask<String, Integer, String> {
+		String mMimeType = "";
+		String mEncoding = "";
+
 		@Override
 		protected String doInBackground(String... urls) {
 
-			// params comes from the execute() call: params[0] is the url.
-			try {
-				String data = downloadUrl((String) urls[0]);
+			InputStream is = null;
+			String result = "";
 
-				return data;
+			HttpURLConnection conn = null;
+			try {
+				String contentAsString = "";
+				String tempString = "";
+				URL url = new URL(urls[0]);
+				System.out.println("Abriendo conexión: " + url.getHost() + " puerto=" + url.getPort());
+				conn = (HttpURLConnection) url.openConnection();
+				conn.setReadTimeout(10000 /* milliseconds */);
+				conn.setConnectTimeout(15000 /* milliseconds */);
+				conn.setRequestMethod("GET");
+				conn.setDoInput(true);
+				// Starts the query
+				conn.connect();
+				final int response = conn.getResponseCode();
+				final int contentLength = conn.getHeaderFieldInt("Content-length", 1000);
+				mMimeType = conn.getHeaderField("Content-Type");
+				mEncoding = mMimeType.substring(mMimeType.indexOf(";"));
+				progressBar.setMax(contentLength);
+
+				Log.d(DEBUG_TAG, "The response is: " + response);
+				is = conn.getInputStream();
+
+				BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+
+				while ((tempString = br.readLine()) != null) {
+					contentAsString = contentAsString + tempString;
+					this.publishProgress(contentAsString.length());
+				}
+
+				// Convert the InputStream into a string
+				is.close();
+				conn.disconnect();
+				return contentAsString;
 			} catch (IOException e) {
-				return "Unable to retrieve web page. URL may be invalid.";
+				result = "Excepción: " + e.getMessage();
+				System.out.println(result);
+
+				// Makes sure that the InputStream is closed after the app is
+				// finished using it.
 			}
+			return result;
 		}
 
 		// onPostExecute displays the results of the AsyncTask.
 		protected void onPostExecute(final String result) {
+			webView.loadData(result, mMimeType, mEncoding);
 			web.setText(result);
 
 		}
@@ -135,16 +204,59 @@ public class Network extends Activity {
 		@Override
 		protected String doInBackground(String... urls) {
 
-			// params comes from the execute() call: params[0] is the url.
-			try {
-				if (urls.length >= 2)
+			InputStream is = null;
+			String result = "";
 
-					return downloadUrlByPost((String) urls[0], urls[1]);
-				else
-					return null;
+			HttpURLConnection conn = null;
+			try {
+				String contentAsString = "";
+				String tempString = "";
+				URL url = new URL(urls[0]);
+				System.out.println("Abriendo conexión: " + url.getHost() + " puerto=" + url.getPort());
+				conn = (HttpURLConnection) url.openConnection();
+				conn.setReadTimeout(10000 /* milliseconds */);
+				conn.setConnectTimeout(15000 /* milliseconds */);
+				conn.setRequestMethod("POST");
+
+				conn.setDoInput(true);
+				conn.setDoOutput(true);
+
+				// Send request
+				OutputStream os = conn.getOutputStream();
+				BufferedWriter wr = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+
+				wr.write(urls[1]);
+				wr.flush();
+				wr.close();
+				// Starts the query
+				conn.connect();
+				final int response = conn.getResponseCode();
+				final int contentLength = conn.getHeaderFieldInt("Content-length", 1000);
+				progressBar.setMax(contentLength);
+
+				Log.d(DEBUG_TAG, "The response is: " + response);
+				is = conn.getInputStream();
+
+				BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+
+				while ((tempString = br.readLine()) != null) {
+					contentAsString = contentAsString + tempString;
+					publishProgress(contentAsString.length());
+				}
+
+				if (is != null) {
+					is.close();
+					conn.disconnect();
+				}
+				return contentAsString;
 			} catch (IOException e) {
-				return "Unable to retrieve web page. URL may be invalid.";
+				result = "Excepción: " + e.getMessage();
+				System.out.println(result);
+
+				// Makes sure that the InputStream is closed after the app is
+				// finished using it.
 			}
+			return result;
 		}
 
 		// onPostExecute displays the results of the AsyncTask.
@@ -306,12 +418,9 @@ public class Network extends Activity {
 				is = s.getInputStream();
 				dos = new DataOutputStream(s.getOutputStream());
 
-				dos.writeUTF("GET / HTTP/1.1\r\n"
-						+ "HOST=www10.ujaen.es\r\n"
-						+"Connection: close\r\n"
-						+"Accept: text/*\r\n"
-						+"User-Agent: UJAClient (Windows NT 10.0; WOW64)\r\n"
-						+"Accept-Language: es-ES,es;q=0.8,en;q=0.6");
+				dos.writeUTF("GET / HTTP/1.1\r\n" + "HOST=www10.ujaen.es\r\n" + "Connection: close\r\n"
+						+ "Accept: text/*\r\n" + "User-Agent: UJAClient (Windows NT 10.0; WOW64)\r\n"
+						+ "Accept-Language: es-ES,es;q=0.8,en;q=0.6");
 				dos.flush();
 
 				BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -320,7 +429,7 @@ public class Network extends Activity {
 					line = line + "\r\n";
 
 					if (line.contains("Content-Length")) {
-						String datalength= line.substring(line.indexOf("Content-Length"));
+						String datalength = line.substring(line.indexOf("Content-Length"));
 					}
 					contentAsString = contentAsString + line;
 				}
@@ -340,122 +449,4 @@ public class Network extends Activity {
 
 	}
 
-	// Given a URL, establishes an HttpUrlConnection and retrieves
-	// the web page content as a InputStream, which it returns as
-	// a string.
-	private String downloadUrl(String myurl) throws IOException {
-		InputStream is = null;
-		String result = "";
-
-		HttpURLConnection conn = null;
-		try {
-			String contentAsString = "";
-			String tempString = "";
-			URL url = new URL(myurl);
-			System.out.println("Abriendo conexión: " + url.getHost() + " puerto=" + url.getPort());
-			conn = (HttpURLConnection) url.openConnection();
-			conn.setReadTimeout(10000 /* milliseconds */);
-			conn.setConnectTimeout(15000 /* milliseconds */);
-			conn.setRequestMethod("GET");
-			conn.setDoInput(true);
-			// Starts the query
-			conn.connect();
-			final int response = conn.getResponseCode();
-			final int contentLength = conn.getHeaderFieldInt("Content-length", 1000);
-			String mimeType = conn.getHeaderField("Content-Type");
-			String encoding = mimeType.substring(mimeType.indexOf(";"));
-			progressBar.setMax(contentLength);
-
-			Log.d(DEBUG_TAG, "The response is: " + response);
-			is = conn.getInputStream();
-
-			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-
-			while ((tempString = br.readLine()) != null) {
-				contentAsString = contentAsString + tempString;
-				task.onProgressUpdate(contentAsString.length());
-			}
-
-			webView.loadData(contentAsString, mimeType, encoding);
-			// Convert the InputStream into a string
-
-			return contentAsString;
-		} catch (IOException e) {
-			result = "Excepción: " + e.getMessage();
-			System.out.println(result);
-
-			// Makes sure that the InputStream is closed after the app is
-			// finished using it.
-		} finally {
-			if (is != null) {
-				is.close();
-				conn.disconnect();
-			}
-		}
-		return result;
-	}
-
-	// Given a URL, establishes an HttpUrlConnection and retrieves
-	// the web page content as a InputStream, which it returns as
-	// a string.
-	private String downloadUrlByPost(String myurl, String postparam) throws IOException {
-		InputStream is = null;
-		String result = "";
-
-		HttpURLConnection conn = null;
-		try {
-			String contentAsString = "";
-			String tempString = "";
-			URL url = new URL(myurl);
-			System.out.println("Abriendo conexión: " + url.getHost() + " puerto=" + url.getPort());
-			conn = (HttpURLConnection) url.openConnection();
-			conn.setReadTimeout(10000 /* milliseconds */);
-			conn.setConnectTimeout(15000 /* milliseconds */);
-			conn.setRequestMethod("POST");
-
-			conn.setDoInput(true);
-			conn.setDoOutput(true);
-
-			// Send request
-			OutputStream os = conn.getOutputStream();
-			BufferedWriter wr = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-
-			wr.write(postparam);
-			wr.flush();
-			wr.close();
-			// Starts the query
-			conn.connect();
-			final int response = conn.getResponseCode();
-			final int contentLength = conn.getHeaderFieldInt("Content-length", 1000);
-			progressBar.setMax(contentLength);
-
-			Log.d(DEBUG_TAG, "The response is: " + response);
-			is = conn.getInputStream();
-
-			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-
-			while ((tempString = br.readLine()) != null) {
-				contentAsString = contentAsString + tempString;
-				taskPost.onProgressUpdate(contentAsString.length());
-			}
-
-			// Convert the InputStream into a string
-			// contentAsString = readIt(is, len);
-			return contentAsString;
-		} catch (IOException e) {
-			result = "Excepción: " + e.getMessage();
-			System.out.println(result);
-
-			// Makes sure that the InputStream is closed after the app is
-			// finished using it.
-		} finally {
-			if (is != null) {
-				is.close();
-				conn.disconnect();
-			}
-		}
-		return result;
-	}
-
-	
 }

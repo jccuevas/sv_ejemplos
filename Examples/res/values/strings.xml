@@ -123,6 +123,7 @@
     <string name="row_bt_name">Device name</string>
     <string name="row_bt_mac">BT device MAC</string>
     <string name="bt_device_rssi">RSSI</string>
+    <string name="network_disconnet">Desconectado</string>
     
     <string name="socket_downloading">Descargando por sockets</string>
 

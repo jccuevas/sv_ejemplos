@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" 
-   android:background="@android:color/white">
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/panel_textview_title"
@@ -50,18 +50,12 @@
 
     </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/network_url_downloadprogress"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp" />
-
     <LinearLayout
         android:id="@+id/network_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" 
-         android:orientation="horizontal">
+         android:orientation="horizontal"
+         android:baselineAligned="false">
 
         <LinearLayout
             android:id="@+id/network_buttons_sockets"
@@ -94,10 +88,9 @@
         <LinearLayout
             android:id="@+id/network_buttons_services"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            
-            android:orientation="vertical" 
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/textView3"
