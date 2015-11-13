@@ -22,9 +22,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -78,9 +80,13 @@ public class Network extends Activity {
 				Bundle extras = intent.getExtras();
 
 				if (extras != null) {
-					boolean a = extras.getBoolean("FAILOVER_CONNECTION");
-				}
-				Toast.makeText(Network.this, "Cambio en la conexión", Toast.LENGTH_LONG).show();
+					boolean failover = extras.getBoolean("failover");
+					boolean noConnectivity = extras.getBoolean("noConnectivity");
+					NetworkInfo ninfo =extras.getParcelable("networkInfo");
+					if(ninfo!=null)
+						Toast.makeText(Network.this, "Cambio en la conexión"+ninfo.getTypeName(), Toast.LENGTH_LONG).show();
+				} else
+					Toast.makeText(Network.this, "Cambio en la conexión", Toast.LENGTH_LONG).show();
 
 			}
 		};
