@@ -123,7 +123,7 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/contentdescription_logoandroid" >
 
-        <es.uja.git.sv.graphics.Lienzo
+        <es.uja.git.sm.graphics.Lienzo
             android:id="@+id/custom_drawable_lienzo"
             android:layout_width="0dp"
             android:layout_height="match_parent"

@@ -1,48 +1,102 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="es.uja.git.sv.examples"
+    package="es.uja.git.sm.examples"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="23" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
 
     <application
+        android:allowBackup="false"
         android:icon="@drawable/ic_boton"
         android:label="@string/app_name"
-        android:theme="@style/ActivityTheme" android:allowBackup="false">
+        android:theme="@style/ActivityTheme" >
         <activity
-            android:name="es.uja.git.sv.examples.Menus"
-            android:label="@string/title_activity_menus" android:theme="@style/AppTheme">
+            android:name="es.uja.git.sm.examples.Menus"
+            android:label="@string/title_activity_menus"
+            android:theme="@style/AppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-         <activity android:name="es.uja.git.sv.examples.Settings" android:label="@string/title_activity_menus" android:theme="@style/ActivityTheme"></activity>
-         <activity android:name="es.uja.git.sv.examples.Graficos" android:label="@string/app_graficos" android:theme="@style/ActivityTheme"></activity>
-         <activity android:name="es.uja.git.sv.examples.Help" android:label="@string/app_help" android:theme="@style/ActivityTheme"></activity>
-         <activity android:name="es.uja.git.sv.examples.Ficheros" android:label="@string/app_ficheros" android:theme="@style/ActivityTheme"></activity>
-         <activity android:name="es.uja.git.sv.examples.Fragmentos" android:label="@string/app_fragments" android:theme="@style/ActivityTheme"></activity>
-         <activity android:name="es.uja.git.sv.examples.FragmentosDinamicos" android:label="@string/app_fragments_dinamicos" android:theme="@style/ActivityTheme"></activity>
-         <activity android:name="es.uja.git.sv.examples.Prueba" android:label="@string/app_fragments_dinamicos" android:theme="@style/ActivityTheme"></activity>
-         <activity android:label="@string/app_networking" android:name="es.uja.git.sv.examples.Network" android:theme="@style/ActivityTheme"></activity>
-         <activity android:name="ConnectivityWiFi" android:label="@string/app_connectivity" android:theme="@style/ActivityTheme"></activity>
-         <activity android:name="ConnectivityBT" android:label="@string/app_connectivity_bt" android:theme="@style/ActivityTheme"></activity>
-         <activity android:name="ProviderUse" android:label="@string/app_provideruse" android:theme="@style/ActivityTheme"></activity>
-         <service android:label="@string/service_download" android:name="Download" ></service>
-    
-     <provider android:name="RecordContentProvider"
-        android:authorities="es.uja.git.sv.examples.contentproviders" android:exported="true" android:enabled="true"/>
-    
+        <activity
+            android:name="es.uja.git.sm.examples.Settings"
+            android:label="@string/title_activity_menus"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="es.uja.git.sm.examples.Graficos"
+            android:label="@string/app_graficos"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="es.uja.git.sm.examples.Help"
+            android:label="@string/app_help"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="es.uja.git.sm.examples.Ficheros"
+            android:label="@string/app_ficheros"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="es.uja.git.sm.examples.Fragmentos"
+            android:label="@string/app_fragments"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="es.uja.git.sm.examples.FragmentosDinamicos"
+            android:label="@string/app_fragments_dinamicos"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="es.uja.git.sm.examples.Prueba"
+            android:label="@string/app_fragments_dinamicos"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="es.uja.git.sm.examples.Network"
+            android:label="@string/app_networking"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="ConnectivityWiFi"
+            android:label="@string/app_connectivity"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="ConnectivityBT"
+            android:label="@string/app_connectivity_bt"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="ProviderUse"
+            android:label="@string/app_provideruse"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+
+        <service
+            android:name="Download"
+            android:label="@string/service_download" >
+        </service>
+
+        <provider
+            android:name="RecordContentProvider"
+            android:authorities="es.uja.git.sv.examples.contentproviders"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>

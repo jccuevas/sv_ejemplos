@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/fragment_list"
-        android:name="es.uja.git.sv.examples.FragmentLista"
+        android:name="es.uja.git.sm.examples.FragmentLista"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />

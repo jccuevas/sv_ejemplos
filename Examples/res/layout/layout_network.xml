@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/layout_fragment_network_URL"
-        android:name="es.uja.git.sv.examples.NetworkURLFragment"
+        android:name="es.uja.git.sm.examples.NetworkURLFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -18,14 +18,14 @@
 
         <fragment
             android:id="@+id/layout_fragment_network_navigation"
-            android:name="es.uja.git.sv.examples.NetworkNavigationFragment"
+            android:name="es.uja.git.sm.examples.NetworkNavigationFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <fragment
             android:id="@+id/layout_fragment_network_web"
-            android:name="es.uja.git.sv.examples.NetworkWebFragment"
+            android:name="es.uja.git.sm.examples.NetworkWebFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3" />
