@@ -67,7 +67,7 @@
             android:theme="@style/ActivityTheme" >
         </activity>
         <activity
-            android:name="es.uja.git.sm.examples.Network"
+            android:name="es.uja.git.sm.examples.ActivityNetwork"
             android:label="@string/app_networking"
             android:theme="@style/ActivityTheme" >
         </activity>
@@ -88,7 +88,7 @@
         </activity>
 
         <service
-            android:name="Download"
+            android:name="ServiceDownload"
             android:label="@string/service_download" >
         </service>
 

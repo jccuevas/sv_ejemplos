@@ -273,11 +273,7 @@ public class Menus extends Activity implements OnKeyListener {
 								getApplicationContext(), ProviderUse.class);
 						startActivity(newactivity_contentprovider);
 						break;
-					case 7:
-						Intent newactivity_prueba = new Intent(
-								getApplicationContext(), Prueba.class);
-						startActivity(newactivity_prueba);
-						break;
+					
 					default:
 						finish();
 					}

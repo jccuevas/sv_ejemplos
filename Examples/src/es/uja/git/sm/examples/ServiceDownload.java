@@ -1,5 +1,6 @@
 package es.uja.git.sm.examples;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +30,7 @@ import android.widget.Toast;
  * @author Juan Carlos
  *
  */
-public class Download extends Service {
+public class ServiceDownload extends Service {
 
 	public static final String PARAMETER_URL="url";
 
@@ -50,8 +51,8 @@ public class Download extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		SocketConnection task=null;
-		if(intent.hasExtra(Download.PARAMETER_URL))
-			url=intent.getCharSequenceExtra(Download.PARAMETER_URL).toString();
+		if(intent.hasExtra(ServiceDownload.PARAMETER_URL))
+			url=intent.getCharSequenceExtra(ServiceDownload.PARAMETER_URL).toString();
 		
 		
 		try {
@@ -116,6 +117,52 @@ public class Download extends Service {
 			stopSelf();
 		}
 
+		public String conectaSocket(URL url) {
+
+			if (url != null) {
+				String contentAsString = "";
+				Socket s = new Socket();
+				InputStream is;
+				DataOutputStream dos;
+
+				try {
+					String line = null;
+					int port = url.getPort();
+					s = new Socket(url.getHost(), port);
+
+					is = s.getInputStream();
+					dos = new DataOutputStream(s.getOutputStream());
+
+					dos.writeUTF("GET / HTTP/1.1\r\n" + "HOST=www10.ujaen.es\r\n" + "Connection: close\r\n"
+							+ "Accept: text/*\r\n" + "User-Agent: UJAClient (Windows NT 10.0; WOW64)\r\n"
+							+ "Accept-Language: es-ES,es;q=0.8,en;q=0.6");
+					dos.flush();
+
+					BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+
+					while ((line = reader.readLine()) != null) {
+						line = line + "\r\n";
+
+						if (line.contains("Content-Length")) {
+							String datalength = line.substring(line.indexOf("Content-Length"));
+						}
+						contentAsString = contentAsString + line;
+					}
+					dos.close();
+					is.close();
+					s.close();
+					return contentAsString;
+				} catch (IOException e) {
+					return e.getMessage();
+
+				} catch (IllegalArgumentException e) {
+					return e.getMessage();
+
+				}
+			}
+			return "Conexión fallida";
+
+		}
 	}
 
 	void setResult(String value)
@@ -125,45 +172,7 @@ public class Download extends Service {
 	
 	
 	
-	public String conectaSocket(URL url) {
-
-		if (url != null) {
-			String contentAsString="";
-			Socket s = new Socket();
-			InputStream is;
-			DataOutputStream dos;
-
-			try {
-				int port=url.getPort();
-				s = new Socket(url.getHost(), port);
-				
-				
-				is = s.getInputStream();
-				dos = new DataOutputStream(s.getOutputStream());
-
-				dos.writeUTF("get /index.html HTTP/1.1\r\n\r\n");
-				dos.flush();
-				
-				// Convert the InputStream into a string
-				
-				contentAsString=contentAsString+readIt(is,100);
-				
-				dos.close();
-				is.close();
-				s.close();
-				return contentAsString;
-			} catch (IOException e) {
-				return e.getMessage();
-				
-			} catch (IllegalArgumentException e) {
-				
-				return e.getMessage();
-				
-			}
-		}
-		return "Conexión fallida";
-
-	}
+	
 
 		// Reads an InputStream and converts it to a String.
 		public String readIt(InputStream stream, int len) throws IOException,

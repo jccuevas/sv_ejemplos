@@ -38,7 +38,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
-public class Network extends Activity {
+public class ActivityNetwork extends Activity {
 	private static final String DEBUG_TAG = "NETWORK ACTIVITY";
 
 	private ProgressBar progressBar = null;
@@ -84,11 +84,11 @@ public class Network extends Activity {
 					boolean noConnectivity = extras.getBoolean("noConnectivity");
 					NetworkInfo ninfo =extras.getParcelable("networkInfo");
 					if(ninfo!=null && noConnectivity)
-						Toast.makeText(Network.this, "Cambio en la conexión "+ninfo.getTypeName()+" [ACTIVA]", Toast.LENGTH_LONG).show();
+						Toast.makeText(ActivityNetwork.this, "Cambio en la conexión "+ninfo.getTypeName()+" [ACTIVA]", Toast.LENGTH_LONG).show();
 					else
-						Toast.makeText(Network.this, "Cambio en la conexión "+ninfo.getTypeName()+" [INACTIVA]", Toast.LENGTH_LONG).show();
+						Toast.makeText(ActivityNetwork.this, "Cambio en la conexión "+ninfo.getTypeName()+" [INACTIVA]", Toast.LENGTH_LONG).show();
 				} else
-					Toast.makeText(Network.this, "Cambio en la conexión", Toast.LENGTH_LONG).show();
+					Toast.makeText(ActivityNetwork.this, "Cambio en la conexión", Toast.LENGTH_LONG).show();
 
 			}
 		};
@@ -113,7 +113,7 @@ public class Network extends Activity {
 					webView.setWebViewClient(new WebViewClient() {
 						public void onReceivedError(WebView view, int errorCode, String description,
 								String failingUrl) {
-							Toast.makeText(Network.this, "Oh no! " + description, Toast.LENGTH_SHORT).show();
+							Toast.makeText(ActivityNetwork.this, "Oh no! " + description, Toast.LENGTH_SHORT).show();
 						}
 					});
 
@@ -282,7 +282,7 @@ public class Network extends Activity {
 
 	}
 
-	private class SocketConnection extends AsyncTask<URL, String, String> {
+	public class SocketConnection extends AsyncTask<URL, String, String> {
 		ProgressDialog pbar = null;
 
 		@Override
@@ -297,7 +297,7 @@ public class Network extends Activity {
 		@Override
 		protected void onPreExecute() {
 
-			pbar = new ProgressDialog(Network.this);
+			pbar = new ProgressDialog(ActivityNetwork.this);
 			pbar.setIndeterminate(true);
 			pbar.setMessage(getBaseContext().getString(R.string.socket_downloading));
 
@@ -323,6 +323,52 @@ public class Network extends Activity {
 
 		}
 
+		public String conectaSocket(URL url) {
+
+			if (url != null) {
+				String contentAsString = "";
+				Socket s = new Socket();
+				InputStream is;
+				DataOutputStream dos;
+
+				try {
+					String line = null;
+					int port = url.getPort();
+					s = new Socket(url.getHost(), port);
+
+					is = s.getInputStream();
+					dos = new DataOutputStream(s.getOutputStream());
+
+					dos.writeUTF("GET / HTTP/1.1\r\n" + "HOST=www10.ujaen.es\r\n" + "Connection: close\r\n"
+							+ "Accept: text/*\r\n" + "User-Agent: UJAClient (Windows NT 10.0; WOW64)\r\n"
+							+ "Accept-Language: es-ES,es;q=0.8,en;q=0.6");
+					dos.flush();
+
+					BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+
+					while ((line = reader.readLine()) != null) {
+						line = line + "\r\n";
+
+						if (line.contains("Content-Length")) {
+							String datalength = line.substring(line.indexOf("Content-Length"));
+						}
+						contentAsString = contentAsString + line;
+					}
+					dos.close();
+					is.close();
+					s.close();
+					return contentAsString;
+				} catch (IOException e) {
+					return e.getMessage();
+
+				} catch (IllegalArgumentException e) {
+					return e.getMessage();
+
+				}
+			}
+			return "Conexión fallida";
+
+		}
 	}
 
 	/**
@@ -402,59 +448,14 @@ public class Network extends Activity {
 			// web.setText("");
 			// URL url = urifragment.getURI();
 
-			Intent intent = new Intent(this, Download.class);
-			intent.putExtra(Download.PARAMETER_URL, urifragment.getURI().toString());
+			Intent intent = new Intent(this, ServiceDownload.class);
+			intent.putExtra(ServiceDownload.PARAMETER_URL, urifragment.getURI().toString());
 			startService(intent);
 
 		}
 
 	}
 
-	public String conectaSocket(URL url) {
 
-		if (url != null) {
-			String contentAsString = "";
-			Socket s = new Socket();
-			InputStream is;
-			DataOutputStream dos;
-
-			try {
-				String line = null;
-				int port = url.getPort();
-				s = new Socket(url.getHost(), port);
-
-				is = s.getInputStream();
-				dos = new DataOutputStream(s.getOutputStream());
-
-				dos.writeUTF("GET / HTTP/1.1\r\n" + "HOST=www10.ujaen.es\r\n" + "Connection: close\r\n"
-						+ "Accept: text/*\r\n" + "User-Agent: UJAClient (Windows NT 10.0; WOW64)\r\n"
-						+ "Accept-Language: es-ES,es;q=0.8,en;q=0.6");
-				dos.flush();
-
-				BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-
-				while ((line = reader.readLine()) != null) {
-					line = line + "\r\n";
-
-					if (line.contains("Content-Length")) {
-						String datalength = line.substring(line.indexOf("Content-Length"));
-					}
-					contentAsString = contentAsString + line;
-				}
-				dos.close();
-				is.close();
-				s.close();
-				return contentAsString;
-			} catch (IOException e) {
-				return e.getMessage();
-
-			} catch (IllegalArgumentException e) {
-				return e.getMessage();
-
-			}
-		}
-		return "Conexión fallida";
-
-	}
-
+	
 }

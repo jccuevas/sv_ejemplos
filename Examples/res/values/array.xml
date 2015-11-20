@@ -8,9 +8,7 @@
         <item>Networking</item>
         <item>Conectividad</item>
         <item>Proveedores de Contenido</item>
-        <item>Fragmento dinámico</item>
         <item>Salir</item>
-        
-    </string-array>
+     </string-array>
 
 </resources>

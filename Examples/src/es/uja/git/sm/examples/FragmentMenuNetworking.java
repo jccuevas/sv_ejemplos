@@ -27,7 +27,7 @@ public class FragmentMenuNetworking extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				Intent newactivity_networking = new Intent(getActivity(), Network.class);
+				Intent newactivity_networking = new Intent(getActivity(), ActivityNetwork.class);
 				startActivity(newactivity_networking);
 				
 			}});
