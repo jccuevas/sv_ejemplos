@@ -1,118 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/network_navigation_root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical" >
+    android:layout_height="wrap_content" >
 
-    <TextView
-        android:id="@+id/panel_textview_title"
+    <LinearLayout
+        android:id="@+id/network_navigation_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ff33b5e5"
-        android:padding="5dp"
-        android:text="@string/fragment_navigation_UsandoHTTP"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:background="@android:color/white"
+        android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        >
-
-        <Button
-            android:id="@+id/network_navigation_button_connect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_blue"
-            android:onClick="onConnectHTTP"
-            android:text="@string/fragment_navigation_connect" 
-            style="?android:attr/buttonBarButtonStyle"/>
-        <Button
-            android:id="@+id/network_navigation_button_post"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-             style="?android:attr/buttonBarButtonStyle"
-             android:background="@drawable/shape_blue"
-            android:onClick="onConnectHTTPPost"
-            android:text="@string/fragment_navigation_post" />
-
-        <EditText
-            android:id="@+id/network_navigation_edittext_postparams"
+        <TextView
+            android:id="@+id/panel_textview_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/fragment_navigation_postparams"
-            android:imeOptions="actionDone"
-            android:inputType="text" >
-
-            <requestFocus />
-        </EditText>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/network_buttons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-         android:orientation="horizontal"
-         android:baselineAligned="false">
+            android:background="#ff33b5e5"
+            android:padding="5dp"
+            android:text="@string/fragment_navigation_UsandoHTTP"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <LinearLayout
-            android:id="@+id/network_buttons_sockets"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" 
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/fragmentinfo_helptext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="#ff33b5e5"
-                android:padding="5dp"
-                android:text="@string/fragment_navigation_usandoSockets"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
             <Button
-                android:id="@+id/framentmenu_launchbutton"
+                android:id="@+id/network_navigation_button_connect"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:background="@drawable/shape_blue"
-                android:onClick="onConnectSocket"
+                android:onClick="onConnectHTTP"
                 android:text="@string/fragment_navigation_connect" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/network_buttons_services"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="#ff33b5e5"
-                android:padding="5dp"
-                android:text="@string/fragment_navigation_startservice"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/network_navigation_button_post"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:background="@drawable/shape_blue"
-                android:onClick="onNetworkService"
-                android:text="@string/fragment_navigation_connect" />
+                android:onClick="onConnectHTTPPost"
+                android:text="@string/fragment_navigation_post" />
 
+            <EditText
+                android:id="@+id/network_navigation_edittext_postparams"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/fragment_navigation_postparams"
+                android:imeOptions="actionDone"
+                android:inputType="text" >
+
+                <requestFocus />
+            </EditText>
         </LinearLayout>
 
+        <TableLayout
+            android:id="@+id/network_navigation_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false" >
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/network_navigation_socketsText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#ff33b5e5"
+                    android:padding="5dp"
+                    android:text="@string/fragment_navigation_usandoSockets"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:id="@+id/network_navigation_buttonSockets"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_blue"
+                    android:onClick="onConnectSocket"
+                    android:text="@string/fragment_navigation_connect" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/network_navigation_serviceText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#ff33b5e5"
+                    android:padding="5dp"
+                    android:text="@string/fragment_navigation_startservice"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:id="@+id/network_navigation_buttonService"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_blue"
+                    android:onClick="onNetworkService"
+                    android:text="@string/fragment_navigation_connect" />
+
+            </TableRow>
+
+        </TableLayout>
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>
