@@ -19,6 +19,7 @@
     <string name="contentdescription_logoandroid">Logo de Android</string>
     <string name="menu_settings">Configuración</string>
     <string name="menu_exit">Salir</string>
+    <string name="menu_alarm">Poner alarma</string>
     <string name="menu_change">Cambiar</string>
     <string name="menu_searchWifi">Burcar redes</string>
     <string name="menu_searchBT">Burcar dispositivos BlueTooth</string>
