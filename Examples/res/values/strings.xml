@@ -11,6 +11,8 @@
     <string name="app_connectivity">Conectividad WiFi</string>
     <string name="app_connectivity_bt">Conectividad Bluetooth</string>
     <string name="app_provideruse">Uso de un Proveedor de Contenido</string>
+    <string name="service_download">Download service</string>
+    <string name="service_alarm">Alarm service</string>
     <string name="title_activity_menus">Menus</string>
     <string name="settings">Configuración</string>
     <string name="icon_edit">Edit icon</string>
@@ -86,7 +88,7 @@
     <string name="connectivity_code_startscan">Buscando redes wifi cercanas&#8230;</string>
     <string name="ficheros_database">Base de datos</string>
     <string name="ficheros_almacenamiento">Almacenamiento</string>
-    <string name="service_download">Download service</string>
+    
     <string name="fragment_navigation_startservice">Arrancar servicio</string>
     <string name="row_car_brand">brand</string>
     <string name="row_car_hp">hp</string>

@@ -29,7 +29,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Menus extends Activity implements OnKeyListener {
+public class ActivityMainMenu extends Activity implements OnKeyListener {
 	public static final String FRAGMENT_DETAILS = "detailsfragment";
 	private FragmentManager mManager = null;
 	private int posTouched = -1;
@@ -95,6 +95,11 @@ public class Menus extends Activity implements OnKeyListener {
 			// Creamos una nueva Activity
 			Intent newactivity_settings = new Intent(this, Settings.class);
 			startActivity(newactivity_settings);
+			return true;
+		case R.id.menu_alarm:
+			Intent newservice = new Intent(this, AlarmService.class);
+			newservice.putExtra(AlarmService.SLEEPTIME, 5000L);
+			startService(newservice);
 			return true;
 		}
 
